@@ -1,7 +1,10 @@
 export { fakeBackend };
 
 function fakeBackend() {
-    let users = [{ id: 1, username: 'test', password: 'test', firstName: 'Test', lastName: 'User' }];
+    let users = [{ id: 1, username: 'test', password: 'test', firstName: 'Test', lastName: 'User' },
+    { id: 2, username: 'test2', password: 'test2', firstName: 'Test2', lastName: 'User2' }];
+    let articles = [{ id: 1, username: 'test', password: 'test', firstName: 'Test', lastName: 'User' }, { id: 2, username: 'test2', password: 'test2', firstName: 'Test2', lastName: 'User2' }, { id: 3, username: 'test3', password: 'test3', firstName: 'Test3', lastName: 'User' }];
+
     let realFetch = window.fetch;
     window.fetch = function (url, opts) {
         return new Promise((resolve, reject) => {
@@ -14,6 +17,8 @@ function fakeBackend() {
                         return authenticate();
                     case url.endsWith('/users') && opts.method === 'GET':
                         return getUsers();
+                    case url.endsWith('/articles') && opts.method === 'GET':
+                        return getArticles();
                     default:
                         // pass through any requests not handled above
                         return realFetch(url, opts)
@@ -44,6 +49,10 @@ function fakeBackend() {
                 return ok(users);
             }
 
+            function getArticles() {
+                if (!isAuthenticated()) return unauthorized();
+                return ok(articles);
+            }
             // helper functions
 
             function ok(body) {

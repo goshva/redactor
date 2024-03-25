@@ -25,10 +25,10 @@
   <template>
     <div class="jumbotron">
       <div class="article-header">
-        <input model={{title}}>
+        <input :value="title">
       </div>
       <div class="article-body">  
-        <textarea model={{ message }}></textarea>
+        <input :value="message">
       </div>
     </div>
   </template>
@@ -54,16 +54,10 @@
 }
 
 /* Style for the body of the article */
-.article-body {
+.article-body  input{
+  width:100%;
   margin:5px 0;
   padding:3px;
   display: block;
-}
-
-
-textarea {
-  width:100%;
-  padding: 20px;
-  line-height: 1.6;
 }
   </style>

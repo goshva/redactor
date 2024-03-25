@@ -4,30 +4,32 @@ import Article from '@/components/Article.vue';
 
 import { storeToRefs } from 'pinia';
 
-import { useAuthStore, useUsersStore } from '@/stores';
+import { useAuthStore, useUsersStore, useArticlesStore } from '@/stores';
 
 const authStore = useAuthStore();
 const { user: authUser } = storeToRefs(authStore);
 
-const usersStore = useUsersStore();
-const { users } = storeToRefs(usersStore);
+const articlesStore = useArticlesStore();
+const { articles } = storeToRefs(articlesStore);
 
-usersStore.getAll();
+articlesStore.getAll();
 </script>
 
 <template>
     <div>
         <h1>Hi {{authUser?.firstName}}!</h1>
-        <ul v-if="users.length">
-            <li v-for="user in users" :key="user.id">
-                <Article title="Как изучить Vue" message="с начала"></Article>
+        <ul v-if="articles.length" class="mainList">
+            <li v-for="user in articles" :key="user.id">
+                <Article :key="user.id" :title="user.firstName" :message="user.lastName"></Article>
             </li>
         </ul>
-
-        <ul v-if="users.length">
-            <li v-for="user in users" :key="user.id">{{user.firstName}} {{user.lastName}}</li>
-        </ul>
-        <div v-if="users.loading" class="spinner-border spinner-border-sm"></div>
-        <div v-if="users.error" class="text-danger">Error loading users: {{users.error}}</div>
+        <div v-if="articles.loading" class="spinner-border spinner-border-sm"></div>
+        <div v-if="articles.error" class="text-danger">Error loading articles: {{articles.error}}</div>
     </div>
 </template>
+<style>
+
+.mainList li {
+    list-style-type: none;
+}
+</style>
