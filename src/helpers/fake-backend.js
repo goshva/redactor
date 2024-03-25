@@ -3,7 +3,10 @@ export { fakeBackend };
 function fakeBackend() {
     let users = [{ id: 1, username: 'test', password: 'test', firstName: 'Test', lastName: 'User' },
     { id: 2, username: 'test2', password: 'test2', firstName: 'Test2', lastName: 'User2' }];
-    let articles = [{ id: 1, username: 'test', password: 'test', firstName: 'Test', lastName: 'User' }, { id: 2, username: 'test2', password: 'test2', firstName: 'Test2', lastName: 'User2' }, { id: 3, username: 'test3', password: 'test3', firstName: 'Test3', lastName: 'User' }];
+    let articles = [
+    { id: 1, username: 'test', password: 'test', firstName: 'Организуем и проведем торги Возьмем на себя подготовку  и оформление документов', lastName: 'Электронная торговая площадка по реализации имущества предприятий банкротов и корпоративных закупок юридическими лицами. Профессионально оказываем услуги для организаторов и участников торгов, а также предоставляем консультационную и юридическую поддержку' },
+    { id: 2, username: 'test2', password: 'test2', firstName: 'Торги по банкротству <br> 127-ФЗ', lastName: 'Проведение торгов в электронном виде в соответствии с Федеральным Законом №127-ФЗ «О несостоятельности (банкротстве)»' },
+    { id: 3, username: 'test3', password: 'test3', firstName: 'Коммерческие торги <br> ГК РФ, 135-ФЗ', lastName: 'Торги и закупки не противоречаще ГК РФ и 135-ФЗ «О защите конкуренции»' }];
 
     let realFetch = window.fetch;
     window.fetch = function (url, opts) {
