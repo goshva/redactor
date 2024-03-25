@@ -2,24 +2,20 @@
   
   <script setup>
   import { defineProps } from 'vue';
-
-  const props = defineProps({
-  title: String,
-  message: String,
-  });
-
   import { storeToRefs } from 'pinia';
-  
   import { useAuthStore, useUsersStore } from '@/stores';
+  import ButtonSave from './ButtonSave.vue';
+  
+  const props = defineProps({
+    title: String,
+    message: String,
+  });
   
   const authStore = useAuthStore();
-  const { user: authUser } = storeToRefs(authStore);
-  
   const usersStore = useUsersStore();
   const { users } = storeToRefs(usersStore);
   
   usersStore.getAll();
-  
   </script>
   
   <template>
@@ -27,10 +23,11 @@
       <div class="article-header">
         <input :value="title">
       </div>
-      <div class="article-body">  
+      <div class="article-body">
         <input :value="message">
       </div>
     </div>
+    <ButtonSave @save-changes="saveChanges"/>
   </template>
 
   <style>
