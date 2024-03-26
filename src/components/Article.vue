@@ -21,13 +21,15 @@
   <template>
     <div class="jumbotron">
       <div class="article-header">
-        <input :value="title">
+        <span class="span-header">Заголовок</span>
+        <textarea class="form-control" :value="title"></textarea>
       </div>
       <div class="article-body">
-        <input :value="message">
+        <span class="span-header">Текст</span>
+        <textarea class="text form-control" :value="message"></textarea>
       </div>
+      <ButtonSave @save-changes="saveChanges"/>
     </div>
-    <ButtonSave @save-changes="saveChanges"/>
   </template>
 
   <style>
@@ -37,24 +39,25 @@
   border-radius: 0.3rem;
   }
   /* Style for the header of the article */
+.article-body,
 .article-header {
   width:100%;
   background-color: #f2f2f2;
-  padding: 20px;
   text-align: center;
+  max-height: 200px;
 }
 
-.article-header input {
+textarea {
   width:100%;
   font-size: 24px;
   color: #333;
+  resize: none;
+  border-radius: 15px;
 }
 
-/* Style for the body of the article */
-.article-body  input{
-  width:100%;
-  margin:5px 0;
-  padding:3px;
-  display: block;
+.article-body textarea {
+  height: 150px;
 }
+
+
   </style>

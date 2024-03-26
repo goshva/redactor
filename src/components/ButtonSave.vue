@@ -1,5 +1,5 @@
 <template>
-  <div class="container pt-4 pb-4">
+  <div class="container btn-wrap pt-4 pb-4">
     <button @click="saveChanges" class="btn btn-primary">
       Save Changes
     </button>
@@ -47,3 +47,10 @@ export default {
   }
 }
 </script>
+
+<style>
+  .btn-wrap {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+</style>
