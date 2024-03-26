@@ -5,11 +5,13 @@
       <li class="one-arr" v-for="(array, index) in contentArrays" :key="index">
         <h3>Блок-массив {{ index }}</h3>
         <ul class="arr-list">
-          <li class="arr-item" :style="{display: (key !== 'content' && key !== 'customContent') ? 'none' : 'flex' }" v-for="(item, key, idx) in array" :key="idx">
+          <li class="arr-item" v-for="(item, key, idx) in array" :key="idx" :style="{display: showContentKeys ? 'flex' : (key !== 'content' && key !== 'customContent') ? 'none' : 'flex'}">
             <p class="key" v-if="key === 'content' || key === 'customContent'">{{ key }}: </p>
-            <input class="inp" type="text" v-if="key === 'content' || key === 'customContent'" :value="item" @input="updateItem(index, key, idx, $event.target.value)">
+            <p class="key" v-else>{{ key }}: </p>
+            <input class="inp" type="text" v-if="showContentKeys || (key === 'content' || key === 'customContent')" :value="item" @input="updateItem(index, key, idx, $event.target.value)">
           </li>
         </ul>
+        <button @click="toggleShow(index)">Показать</button>
       </li>
     </ul>
   </div>
@@ -21,6 +23,7 @@ import { ref, watch } from 'vue';
 export default {
   setup() {
     const contentArrays = ref([]);
+    const showContentKeys = ref(false);
 
     const fetchJsonFile = async (url) => {
       const response = await fetch(url);
@@ -42,9 +45,24 @@ export default {
       contentArrays.value[arrayIndex][key][itemIndex] = value;
     };
 
+    const toggleShow = (index) => {
+      showContentKeys.value = !showContentKeys.value;
+      contentArrays.value[index] = contentArrays.value[index].map((item, key) => {
+        if (key !== 'content' && key !== 'customContent') {
+          return {
+            ...item,
+            show: showContentKeys.value
+          }
+        }
+        return item;
+      });
+    };
+
     return {
       contentArrays,
-      updateItem
+      updateItem,
+      showContentKeys,
+      toggleShow
     };
   }
 };
