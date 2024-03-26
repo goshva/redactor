@@ -5,12 +5,11 @@
       <li class="one-arr" v-for="(array, index) in contentArrays" :key="index">
         <h3>Блок-массив {{ index }}</h3>
         <ul class="arr-list">
-          <li class="arr-item" v-for="(item, key, idx) in array" :key="idx">
-            <p class="key">{{ key }}: </p>
-            <input class="inp" type="text" :value="item" @input="updateItem(index, key, idx, $event.target.value)">
+          <li class="arr-item" :style="{display: (key !== 'content' && key !== 'customContent') ? 'none' : 'flex' }" v-for="(item, key, idx) in array" :key="idx">
+            <p class="key" v-if="key === 'content' || key === 'customContent'">{{ key }}: </p>
+            <input class="inp" type="text" v-if="key === 'content' || key === 'customContent'" :value="item" @input="updateItem(index, key, idx, $event.target.value)">
           </li>
         </ul>
-
       </li>
     </ul>
   </div>
@@ -18,7 +17,6 @@
 
 <script>
 import { ref, watch } from 'vue';
-
 
 export default {
   setup() {

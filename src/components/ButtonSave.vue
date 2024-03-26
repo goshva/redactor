@@ -1,56 +1,41 @@
 <template>
-  <div class="container btn-wrap pt-4 pb-4">
-    <button @click="saveChanges" class="btn btn-primary">
-      Save Changes
-    </button>
-  </div>
+  <button @click="saveChanges">
+    Сохранить
+  </button>
 </template>
 
 <script>
-export default {
-  props: {
-    id: {
-      type: Number,
-      required: true
-    },
-    firstName: {
-      type: String,
-      required: true
-    },
-    lastName: {
-      type: String,
-      required: true
-    }
-  },
+import { defineComponent } from 'vue';
+
+export default defineComponent({
   methods: {
     saveChanges() {
-      const requestOptions = {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          firstName: this.firstName,
-          lastName: this.lastName
-        })
-      };
-
-      fetch(`/api/cards/${this.id}`, requestOptions)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('HTTP error ' + response.status);
-          }
-          console.log('Изменения сохранены');
-        })
-        .catch(error => {
-          console.error('Ошибка:', error);
-        });
+      // Save the updated contentArrays data to the JSON file
+      const jsonData = JSON.stringify(this.$parent.$data.contentArrays);
+      const blob = new Blob([jsonData], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'contents.json';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
     }
   }
-}
+})
 </script>
 
-<style>
-  .btn-wrap {
-    display: flex;
-    flex-direction: row-reverse;
-  }
+<style scoped>
+button {
+  display: flex;
+  flex-direction: row-reverse;
+  width: 100px;
+  height: 50px;
+  border-radius: 10px;
+  margin: 20px 0;
+  background-color: #2c3e50;
+  color: white;
+  cursor: pointer;
+}
 </style>
