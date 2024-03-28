@@ -14,11 +14,11 @@
               <ul class="arr-list">
                 <li class="arr-item">
                   <p class="key">title</p>
-                  <input :value="JSON.parse(item)['title']" class="inp" type="text">
+                  <input  v-if="JSON.parse(item)" :value="JSON.parse(item)['title']" class="inp" type="text">
                 </li>
                 <li class="arr-item">
                   <p class="key">text</p>
-                  <input :value="JSON.parse(item)['text']" class="inp" type="text">
+                  <input  v-if="JSON.parse(item)"  :value="JSON.parse(item)['text']" class="inp" type="text">
                 </li>
               </ul>
             </div>
