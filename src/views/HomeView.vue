@@ -1,10 +1,10 @@
 <script setup>
-import Article from '@/components/Article.vue';
+import ArticleEditor from '@/components/Article.vue';
 
 
 import { storeToRefs } from 'pinia';
 
-import { useAuthStore, useUsersStore, useArticlesStore } from '@/stores';
+import { useAuthStore, useArticlesStore } from '@/stores';
 
 const authStore = useAuthStore();
 const { user: authUser } = storeToRefs(authStore);
@@ -20,7 +20,7 @@ articlesStore.getAll();
         <h1>Hi {{authUser?.firstName}}!</h1>
         <ul v-if="articles.length" class="mainList">
             <li>
-                <Article/>
+                <ArticleEditor/>
             </li>
         </ul>
         <div v-if="articles.loading" class="spinner-border spinner-border-sm"></div>

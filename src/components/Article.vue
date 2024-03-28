@@ -1,3 +1,4 @@
+// eslint-disable-next-line vue/multi-word-component-names
 <template>
   <div class="container">
     <h1>ТЕСТ</h1>
@@ -24,12 +25,7 @@
             </div>
             <div v-else-if="key === 'customContent'">
               <ul class="arr-list">
-
-
-                <li class="arr-item" v-for="subItem in [0,1,2]">
-                  <p class="key">{{ subItem }} </p>
-                  <input :value="subItem" class="inp" type="text">
-                </li>
+                  <SubArticle :name=item :age=index />
               </ul>
             </div>
             <input v-else class="inp" type="text" :value="item" @input="updateItem(index, key, idx, $event.target.value)">
@@ -46,12 +42,14 @@
 </template>
 
 <script>
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 import ButtonSave from './ButtonSave.vue';
+import SubArticle from './SubArticle.vue';
 
 export default {
   components: {
     ButtonSave,
+    SubArticle
   },
   setup() {
     const contentArrays = ref([]);
@@ -63,35 +61,27 @@ export default {
       contentArrays.value = jsonData;
     };
 
-    watch(contentArrays, () => {
-      localStorage.setItem('contentArrays', JSON.stringify(contentArrays.value));
-    });
-
-    fetchJsonFile('/public/contents.json');
-
-    if (localStorage.getItem('contentArrays')) {
-      contentArrays.value = JSON.parse(localStorage.getItem('contentArrays'));
-    }
-
-    const updateItem = (arrayIndex, key, itemIndex, value) => {
-      contentArrays.value[arrayIndex][key][itemIndex] = value;
-    };
+    fetchJsonFile('/contents.json');
 
     const toggleShow = (index) => {
       showContentKeys.value = !showContentKeys.value;
-      contentArrays.value[index] = contentArrays.value[index].map((item, key) => {
+      contentArrays.value[index] = contentArrays.value[index].map((it, key) => {
         if (key !== 'content' && key !== 'customContent') {
           console.log(showContentKeys.value)
           return {
-            ...item,
+            ...it,
             show: showContentKeys.value
           }
         }
-        return item;
+        return it;
       });
     };
 
-
+    const JSONconverter = (string) => {
+     const newString = string
+      console.log(newString)
+     return newString
+    }
 
     const generateUrl = (index) => {
       const mainUrl = "http://tender.one/"
@@ -105,11 +95,11 @@ export default {
 
     return {
       contentArrays,
-      updateItem,
       showContentKeys,
       toggleShow,
       generateUrl,
-      switchTo
+      switchTo,
+      JSONconverter
 
     };
   }
