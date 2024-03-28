@@ -19,8 +19,8 @@ articlesStore.getAll();
     <div>
         <h1>Hi {{authUser?.firstName}}!</h1>
         <ul v-if="articles.length" class="mainList">
-            <li v-for="user in articles" :key="user.id">
-                <Article :key="user.id" :title="user.firstName" :message="user.lastName"></Article>
+            <li>
+                <Article/>
             </li>
         </ul>
         <div v-if="articles.loading" class="spinner-border spinner-border-sm"></div>
