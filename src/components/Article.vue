@@ -4,19 +4,42 @@
     <ul>
       <li class="one-arr" v-for="(array, index) in contentArrays" :key="index">
         <button class="" @click="switchTo(generateUrl(index))">{{ generateUrl(index) }}</button>
-       
+
         <ul class="arr-list">
-          <li class="arr-item" v-for="(item, key, idx) in array" :key="idx" :style="{display: showContentKeys ? 'flex' : (key !== 'content' && key !== 'customContent') ? 'none' : 'flex'}">
-            <p class="key" v-if="key === 'content' || key === 'customContent'">{{ key }}: </p>
+          <li class="arr-item" v-for="(item, key, idx) in array" :key="idx"
+            :style="{ display: showContentKeys ? 'flex' : (key !== 'content' && key !== 'customContent') ? 'none' : 'flex' }">
+            <p class="keydn" v-if="key === 'content' || key === 'customContent'"></p>
             <p class="key" v-else>{{ key }}: </p>
-            <input class="inp" type="text" v-if="showContentKeys || (key === 'content' || key === 'customContent')" :value="item" @input="updateItem(index, key, idx, $event.target.value)">
+            <div v-if="key === 'content'">
+              <ul class="arr-list">
+                <li class="arr-item">
+                  <p class="key">title</p>
+                  <input :value="JSON.parse(item)['title']" class="inp" type="text">
+                </li>
+                <li class="arr-item">
+                  <p class="key">text</p>
+                  <input :value="JSON.parse(item)['text']" class="inp" type="text">
+                </li>
+              </ul>
+            </div>
+            <div v-else-if="key === 'customContent'">
+              <ul class="arr-list">
+
+
+                <li class="arr-item" v-for="subItem in [0,1,2]">
+                  <p class="key">{{ subItem }} </p>
+                  <input :value="subItem" class="inp" type="text">
+                </li>
+              </ul>
+            </div>
+            <input v-else class="inp" type="text" :value="item" @input="updateItem(index, key, idx, $event.target.value)">
           </li>
         </ul>
         <div class="btn-wrapp">
-        <ButtonSave @click="saveChanges" />
-        
-        <button class="btn-show" @click="toggleShow(index)">  📂</button>
-      </div>
+          <ButtonSave @click="saveChanges" />
+
+          <button class="btn-show" @click="toggleShow(index)"> 📂</button>
+        </div>
       </li>
     </ul>
   </div>
@@ -54,18 +77,19 @@ export default {
       contentArrays.value[arrayIndex][key][itemIndex] = value;
     };
 
-    // const toggleShow = (index) => {
-    //   showContentKeys.value = !showContentKeys.value;
-    //   contentArrays.value[index] = contentArrays.value[index].map((item, key) => {
-    //     if (key !== 'content' && key !== 'customContent') {
-    //       return {
-    //         ...item,
-    //         show: showContentKeys.value
-    //       }
-    //     }
-    //     return item;
-    //   });
-    // };
+    const toggleShow = (index) => {
+      showContentKeys.value = !showContentKeys.value;
+      contentArrays.value[index] = contentArrays.value[index].map((item, key) => {
+        if (key !== 'content' && key !== 'customContent') {
+          console.log(showContentKeys.value)
+          return {
+            ...item,
+            show: showContentKeys.value
+          }
+        }
+        return item;
+      });
+    };
 
 
 
@@ -83,7 +107,7 @@ export default {
       contentArrays,
       updateItem,
       showContentKeys,
-      // toggleShow,
+      toggleShow,
       generateUrl,
       switchTo
 
@@ -131,6 +155,10 @@ export default {
   border-radius: 0 20px 20px 0;
 }
 
+.keydn {
+  display: none;
+}
+
 .key {
   margin: 0;
   display: flex;
@@ -151,10 +179,9 @@ export default {
 }
 
 .btn-show {
-font-size: 50px;
+  font-size: 50px;
   background-color: unset;
   border: unset;
   cursor: pointer;
 }
-
 </style>
