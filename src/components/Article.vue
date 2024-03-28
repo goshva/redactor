@@ -157,7 +157,7 @@ export default {
   text-align: center;
   border: 2px solid #dadada;
   height: 50px;
-  width: 200px;
+  width: 400px;
   text-wrap: wrap;
   background-color: lightgreen;
   border-radius: 20px 0 0 20px;

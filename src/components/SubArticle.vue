@@ -1,10 +1,10 @@
 <template>
     <ul class="arr-list" v-if="!!name">
 
-        <p>id: {{ age }}</p>
+        <!-- <p>id: {{ age }}</p> -->
         <li class="arr-item" v-for="subItem in Object.keys(JSON.parse(name))" :key="subItem">
             <p class="key"> {{ subItem }}</p>
-            <input :value="JSON.parse(name)[subItem].value" class="inp" type="text">
+            <input :class="inp" :value="JSON.parse(name)[subItem].value" class="inp" type="text">
         </li>
 
     </ul>
@@ -46,5 +46,29 @@ export default defineComponent({
     display: flex;
     align-items: center;
     width: 100%;
+}
+
+.inp {
+  border: 1px solid #dadada;
+  display: block;
+  height: 52px;
+  padding: 10px 30px;
+  width: 100%;
+  height: 50px;
+  border-radius: 0 20px 20px 0;
+}
+
+.key {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  text-align: center;
+  border: 2px solid #dadada;
+  height: 50px;
+  width: 400px;
+  text-wrap: wrap;
+  background-color: lightgreen;
+  border-radius: 20px 0 0 20px;
 }
 </style>
