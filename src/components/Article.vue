@@ -101,10 +101,14 @@ export default {
     }
 
     const generateUrl = (index) => {
-      const mainUrl = "http://tender.one/"
-      const url = mainUrl + contentArrays.value[index]["url"]
-      return url
-    }
+  const mainUrl = "http://tender.one/"
+  const url = contentArrays.value[index]["url"]
+  if (url === null) {
+    return mainUrl
+  } else {
+    return mainUrl + url
+  }
+}
 
     const switchTo = (url) => {
       window.location = url
