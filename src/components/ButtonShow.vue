@@ -1,8 +1,6 @@
 <template>
   <div class="btn-wrapp">
     <button class="btn-show" @click="toggleShow"> 📂</button>
-    <p>{{ index + 1 }}</p>
-    
   </div>
 </template>
 
@@ -25,3 +23,13 @@ export default {
   },
 };
 </script>
+
+<style>
+.btn-show{
+  font-size: 50px;
+  background-color: transparent;
+  border: unset;
+}
+
+
+</style>

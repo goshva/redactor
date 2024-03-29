@@ -1,16 +1,18 @@
 <template>
     <ul class="arr-list" v-if="!!name">
-        <p class="block">id: {{ age }}</p> 
+
         <li class="arr-item" v-for="subItem in Object.keys(JSON.parse(name))" :key="subItem">
-            <p class="key-top"> {{ subItem }}</p>
-            <input :class="inp" :value="JSON.parse(name)[subItem].value" class="inp" type="text">
+          <input :class="inp" :value="JSON.parse(name)[subItem].value" class="inp" type="text">
+          <div :data-tooltip="'{{ subItem }}'" class="key-top">
             <ButtonSave :age=item :name=subItem :fresh=JSON.parse(name)[subItem].value />
+          </div>
+            
         </li>
     </ul>
     <ul class="arr-list" v-else>
   <li class="arr-item">
-    <p class="key-null key-top">customContent</p>
     <input class="inp-null" type="text" value="">
+    <div data-tooltip="customContent" class="key-null key-top"></div>
   </li>
     </ul>
 </template>
@@ -45,6 +47,27 @@ export default defineComponent({
 </script>
 <style>
 
+[data-tooltip] {
+    position: relative; /* Относительное позиционирование */ 
+   }
+   [data-tooltip]::after {
+    content: attr(data-tooltip); /* Выводим текст */
+    position: absolute; /* Абсолютное позиционирование */
+    width: 300px; /* Ширина подсказки */
+    left: 0; top: 0; /* Положение подсказки */
+    background: #3989c9; /* Синий цвет фона */
+    color: #fff; /* Цвет текста */
+    padding: 0.5em; /* Поля вокруг текста */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Параметры тени */
+    pointer-events: none; /* Подсказка */
+    opacity: 0; /* Подсказка невидима */
+    transition: 1s; /* Время появления подсказки */
+   } 
+   [data-tooltip]:hover::after {
+    opacity: 1; /* Показываем подсказку */
+    left: 300px; /* Положение подсказки */
+   }
+
 .block {
   width: 100%;
 }
@@ -55,11 +78,12 @@ export default defineComponent({
   list-style-type: none;
   padding: 0;
   gap: 30px;
+  width: 100%;
 }
 .arr-item {
-    display: flex;
-    align-items: center;
-    width: 90%;
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 
 .inp {
@@ -67,9 +91,9 @@ export default defineComponent({
   display: block;
   height: 52px;
   padding: 10px 30px;
-  width: 700px;
+  min-width: 850px;
   height: 50px;
-  border-radius: 0 20px 20px 0;
+  border-radius: 20px 0 0 20px;
 }
 
 .inp-null {
@@ -77,10 +101,10 @@ export default defineComponent({
   display: block;
   height: 52px;
   padding: 10px 30px;
-  width: 700px;
+  min-width: 850px;
   height: 50px;
   background-color: #f1f1f1;
-  border-radius: 0 20px 20px 0;
+  border-radius: 20px 0 0 20px;
 }
 
 .key-null {
@@ -94,8 +118,8 @@ export default defineComponent({
   height: 50px;
   width: 50%;
   text-wrap: wrap;
+  border-radius: 0 20px 20px 0;
   background-color: lightgreen;
-  border-radius: 20px 0 0 20px;
 }
 
 .key-top {
@@ -111,6 +135,6 @@ export default defineComponent({
   width: 50%;
   text-wrap: wrap;
   background-color: lightgreen;
-  border-radius: 20px 0 0 20px;
+  border-radius: 0 20px 20px 0;
 }
 </style>

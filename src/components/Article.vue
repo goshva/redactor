@@ -9,19 +9,20 @@
         <ul class="arr-list">
           <li class="arr-item" v-for="(item, key, idx) in array" :key="index"
             :style="{ display: showContentKeys ? 'flex' : (key !== 'content' && key !== 'customContent') ? 'none' : 'flex' }">
-            <p class="keydn" v-if="key === 'content' || key === 'customContent'"></p>
-            <p class="key" v-else>{{ key }}: </p>
             <div v-if="key === 'content'">
               <ul class="arr-list">
                 <li class="arr-item">
-                  <p class="key key-top">title</p>
                   <input  v-if="JSON.parse(item)" :value="JSON.parse(item)['title']" class="inp" type="text">
-                  <ButtonSave @click="saveChanges" />
+                  <div data-tooltip="title" class="key key-top">
+                    <ButtonSave @click="saveChanges" />
+                  </div>
                 </li>
                 <li class="arr-item">
-                  <p class="key key-top">text</p>
                   <input  v-if="JSON.parse(item)"  :value="JSON.parse(item)['text']" class="inp" type="text">
-                  <ButtonSave @click="saveChanges" />
+                  <div data-tooltip="text" class="key key-top">
+                    <ButtonSave @click="saveChanges" />
+                  </div>
+               
                 </li>
               </ul>
             </div>
@@ -34,11 +35,13 @@
               <ul class="arr-list">
                 <li class="arr-item">
                   <input  class="inp stuff" type="text" :value="item" @input="updateItem(index, key, idx, $event.target.value)">
-                  <ButtonSave @click="saveChanges" />
                 </li>
               </ul>
             </div>
-            
+            <div class="keydn" v-if="key === 'content' || key === 'customContent'"></div>
+            <div data-tooltip="{{ key }}" class="key" v-else>
+              <ButtonSave @click="saveChanges" />
+            </div>
           </li>
         </ul>
         <ButtonShow
@@ -135,14 +138,42 @@ export default {
 </script>
 
 <style scoped>
+
+[data-tooltip] {
+    position: relative; /* Относительное позиционирование */ 
+   }
+   [data-tooltip]::after {
+    content: attr(data-tooltip); /* Выводим текст */
+    position: absolute; /* Абсолютное позиционирование */
+    width: 300px; /* Ширина подсказки */
+    left: 0; top: 0; /* Положение подсказки */
+    background: #3989c9; /* Синий цвет фона */
+    color: #fff; /* Цвет текста */
+    padding: 0.5em; /* Поля вокруг текста */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Параметры тени */
+    pointer-events: none; /* Подсказка */
+    opacity: 0; /* Подсказка невидима */
+    transition: 1s; /* Время появления подсказки */
+   } 
+   [data-tooltip]:hover::after {
+    opacity: 1; /* Показываем подсказку */
+    left: 300px; /* Положение подсказки */
+   }
+
+   ul {
+    padding: 0;
+    margin: 0;
+   }
+
+
 .container {
-  max-width: 1440px;
+  max-width: 1920px;
   background-color: #f8f9fa;
   margin: 0 auto;
 }
 .list-container {
   padding: 0;
-  max-width: 1440px;
+  max-width: 1660px;
 }
 
 
@@ -155,18 +186,18 @@ export default {
 }
 
 .arr-list {
-  
   display: flex;
   flex-wrap: wrap;
   list-style-type: none;
   padding: 0;
   gap: 20px;
+  width: 100%;
 }
 
 .arr-item {
   display: flex;
   align-items: center;
-  width: 90%;
+  width: 100%;
 }
 
 .inp {
@@ -174,9 +205,9 @@ export default {
   display: block;
   height: 52px;
   padding: 10px 30px;
-  width: 700px;
+  min-width: 850px;
   height: 50px;
-  border-radius: 0 20px 20px 0;
+  border-radius: 20px 0 0 20px;
 }
 
 .keydn {
@@ -187,6 +218,7 @@ export default {
 
 .key {
   font-size: 20px;
+  font-weight: bold;
   margin: 0;
   display: flex;
   align-items: center;
@@ -197,10 +229,22 @@ export default {
   width: 100%;
   text-wrap: wrap;
   background-color: lightgreen;
-  border-radius: 20px 0 0 20px;
+  border-radius: 0 20px 20px 0;
 }
 .key-top {
+  font-size: 20px;
   font-weight: bold;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  text-align: center;
+  border: 2px solid #dadada;
+  height: 50px;
+  width: 50%;
+  text-wrap: wrap;
+  background-color: lightgreen;
+  border-radius: 0 20px 20px 0;
 }
 
 .btn-wrapp {
