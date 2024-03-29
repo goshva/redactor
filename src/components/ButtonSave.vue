@@ -1,6 +1,6 @@
 <template>
 
-  <button @click="saveChanges">
+  <button @click="saveChanges(age,name,fresh)">
     💾
   </button>
 </template>
@@ -9,8 +9,23 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
+  props: {
+        age: {
+            type: Number,
+            default: 0
+        },
+        name: {
+            type: String,
+            required: true
+        },
+        fresh: {
+            type: String,
+            required: true
+        },
+    },
   methods: {
-    saveChanges(index) {
+    saveChanges(age,name,fresh) {
+     /* 
       const jsonData = JSON.stringify(this.$parent.$data.contentArrays);
       const blob = new Blob([jsonData], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
@@ -21,9 +36,17 @@ export default defineComponent({
       link.click();
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
-      console.log('"Номер блока: "{{ generateNumberBlock(index) }}');
+      */
+      console.log(age,name,fresh);
     }
-  }
+  },
+  setup(props) {
+        return {
+            name: props.name,
+            age: props.age,
+            fresh: props.fresh
+        };
+    }
 })
 
 </script>

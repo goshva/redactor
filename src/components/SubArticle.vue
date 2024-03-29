@@ -1,15 +1,12 @@
 <template>
     <ul class="arr-list" v-if="!!name">
 
-        <!-- <p>id: {{ age }}</p> -->
+        <p>id: {{ age }}</p> 
         <li class="arr-item" v-for="subItem in Object.keys(JSON.parse(name))" :key="subItem">
             <p class="key"> {{ subItem }}</p>
             <input :class="inp" :value="JSON.parse(name)[subItem].value" class="inp" type="text">
-            <ButtonSave @click="saveChanges" />
-
-
+            <ButtonSave :age=item :name=subItem :fresh=JSON.parse(name)[subItem].value />
         </li>
-
     </ul>
 </template>
 
@@ -30,7 +27,7 @@ export default defineComponent({
         }
     },
     components: {
-    ButtonSave,
+        ButtonSave,
   },
 
     setup(props) {

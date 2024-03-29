@@ -16,13 +16,15 @@
                 <li class="arr-item">
                   <p class="key">title</p>
                   <input  v-if="JSON.parse(item)" :value="JSON.parse(item)['title']" class="inp" type="text">
-          <ButtonSave @click="saveChanges" />
+                  <ButtonSave :age=item :name=index />
+
 
                 </li>
                 <li class="arr-item">
                   <p class="key">text</p>
                   <input  v-if="JSON.parse(item)"  :value="JSON.parse(item)['text']" class="inp" type="text">
-          <ButtonSave @click="saveChanges" />
+                  <ButtonSave :age=item :name=index />
+
 
                 </li>
                 
