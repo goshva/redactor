@@ -28,7 +28,7 @@
                   <SubArticle :name=item :age=index />
               </ul>
             </div>
-            <input v-else class="inp" type="text" :value="item" @input="updateItem(index, key, idx, $event.target.value)">
+            <input v-else class="inp stuff" type="text" :value="item" @input="updateItem(index, key, idx, $event.target.value)">
           </li>
         </ul>
         <div class="btn-wrapp">
@@ -173,5 +173,8 @@ export default {
   background-color: unset;
   border: unset;
   cursor: pointer;
+}
+.stuff{
+  box-shadow: 1px 1px 0px 0px;
 }
 </style>
