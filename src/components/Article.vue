@@ -14,20 +14,15 @@
             <div v-if="key === 'content'">
               <ul class="arr-list">
                 <li class="arr-item">
-                  <p class="key">title</p>
+                  <p class="key key-top">title</p>
                   <input  v-if="JSON.parse(item)" :value="JSON.parse(item)['title']" class="inp" type="text">
-                  <ButtonSave :age=item :name=index />
-
-
+                  <ButtonSave @click="saveChanges" />
                 </li>
                 <li class="arr-item">
-                  <p class="key">text</p>
+                  <p class="key key-top">text</p>
                   <input  v-if="JSON.parse(item)"  :value="JSON.parse(item)['text']" class="inp" type="text">
-                  <ButtonSave :age=item :name=index />
-
-
+                  <ButtonSave @click="saveChanges" />
                 </li>
-                
               </ul>
             </div>
             <div v-else-if="key === 'customContent'">
@@ -35,7 +30,14 @@
                   <SubArticle :name=item :age=index />
               </ul>
             </div>
-            <input v-else class="inp stuff" type="text" :value="item" @input="updateItem(index, key, idx, $event.target.value)">
+            <div v-else>
+              <ul class="arr-list">
+                <li class="arr-item">
+                  <input  class="inp stuff" type="text" :value="item" @input="updateItem(index, key, idx, $event.target.value)">
+                  <ButtonSave @click="saveChanges" />
+                </li>
+              </ul>
+            </div>
             
           </li>
         </ul>
@@ -56,7 +58,10 @@ import ButtonSave from './ButtonSave.vue';
 import SubArticle from './SubArticle.vue';
 import ButtonShow from './ButtonShow.vue';
 
+
+
 export default {
+  
   components: {
     ButtonSave,
     SubArticle,
@@ -161,7 +166,7 @@ export default {
 .arr-item {
   display: flex;
   align-items: center;
-  width: 100%;
+  width: 90%;
 }
 
 .inp {
@@ -169,7 +174,7 @@ export default {
   display: block;
   height: 52px;
   padding: 10px 30px;
-  width: 100%;
+  width: 700px;
   height: 50px;
   border-radius: 0 20px 20px 0;
 }
@@ -177,6 +182,8 @@ export default {
 .keydn {
   display: none;
 }
+
+
 
 .key {
   font-size: 20px;
@@ -187,10 +194,13 @@ export default {
   text-align: center;
   border: 2px solid #dadada;
   height: 50px;
-  width: 500px;
+  width: 100%;
   text-wrap: wrap;
   background-color: lightgreen;
   border-radius: 20px 0 0 20px;
+}
+.key-top {
+  font-weight: bold;
 }
 
 .btn-wrapp {

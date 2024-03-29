@@ -1,12 +1,17 @@
 <template>
     <ul class="arr-list" v-if="!!name">
-
-        <p>id: {{ age }}</p> 
+        <p class="block">id: {{ age }}</p> 
         <li class="arr-item" v-for="subItem in Object.keys(JSON.parse(name))" :key="subItem">
-            <p class="key"> {{ subItem }}</p>
+            <p class="key-top"> {{ subItem }}</p>
             <input :class="inp" :value="JSON.parse(name)[subItem].value" class="inp" type="text">
             <ButtonSave :age=item :name=subItem :fresh=JSON.parse(name)[subItem].value />
         </li>
+    </ul>
+    <ul class="arr-list" v-else>
+  <li class="arr-item">
+    <p class="key-null key-top">customContent</p>
+    <input class="inp-null" type="text" value="">
+  </li>
     </ul>
 </template>
 
@@ -40,6 +45,10 @@ export default defineComponent({
 </script>
 <style>
 
+.block {
+  width: 100%;
+}
+
 .arr-list {
   display: flex;
   flex-wrap: wrap;
@@ -50,7 +59,7 @@ export default defineComponent({
 .arr-item {
     display: flex;
     align-items: center;
-    width: 100%;
+    width: 90%;
 }
 
 .inp {
@@ -58,12 +67,23 @@ export default defineComponent({
   display: block;
   height: 52px;
   padding: 10px 30px;
-  width: 100%;
+  width: 700px;
   height: 50px;
   border-radius: 0 20px 20px 0;
 }
 
-.key {
+.inp-null {
+  border: 1px solid #dadada;
+  display: block;
+  height: 52px;
+  padding: 10px 30px;
+  width: 700px;
+  height: 50px;
+  background-color: #f1f1f1;
+  border-radius: 0 20px 20px 0;
+}
+
+.key-null {
   font-size: 20px;
   margin: 0;
   display: flex;
@@ -72,7 +92,23 @@ export default defineComponent({
   text-align: center;
   border: 2px solid #dadada;
   height: 50px;
-  width: 500px;
+  width: 50%;
+  text-wrap: wrap;
+  background-color: lightgreen;
+  border-radius: 20px 0 0 20px;
+}
+
+.key-top {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  text-align: center;
+  border: 2px solid #dadada;
+  height: 50px;
+  width: 50%;
   text-wrap: wrap;
   background-color: lightgreen;
   border-radius: 20px 0 0 20px;
