@@ -5,6 +5,9 @@
         <li class="arr-item" v-for="subItem in Object.keys(JSON.parse(name))" :key="subItem">
             <p class="key"> {{ subItem }}</p>
             <input :class="inp" :value="JSON.parse(name)[subItem].value" class="inp" type="text">
+            <ButtonSave @click="saveChanges" />
+
+
         </li>
 
     </ul>
@@ -12,6 +15,8 @@
 
 <script>
 import { defineComponent } from 'vue';
+import ButtonSave from './ButtonSave.vue';
+
 
 export default defineComponent({
     props: {
@@ -24,6 +29,9 @@ export default defineComponent({
             default: 0
         }
     },
+    components: {
+    ButtonSave,
+  },
 
     setup(props) {
         return {
@@ -59,6 +67,7 @@ export default defineComponent({
 }
 
 .key {
+  font-size: 20px;
   margin: 0;
   display: flex;
   align-items: center;
@@ -66,7 +75,7 @@ export default defineComponent({
   text-align: center;
   border: 2px solid #dadada;
   height: 50px;
-  width: 400px;
+  width: 500px;
   text-wrap: wrap;
   background-color: lightgreen;
   border-radius: 20px 0 0 20px;

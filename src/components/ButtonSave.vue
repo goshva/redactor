@@ -1,4 +1,5 @@
 <template>
+
   <button @click="saveChanges">
     💾
   </button>
@@ -9,8 +10,7 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
   methods: {
-    saveChanges() {
-      // Save the updated contentArrays data to the JSON file
+    saveChanges(index) {
       const jsonData = JSON.stringify(this.$parent.$data.contentArrays);
       const blob = new Blob([jsonData], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
@@ -21,15 +21,17 @@ export default defineComponent({
       link.click();
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
+      console.log('"Номер блока: "{{ generateNumberBlock(index) }}');
     }
   }
 })
+
 </script>
 
 <style scoped>
 button {
 
-  font-size: 50px;
+  font-size: 40px;
   background-color: unset;
   border: unset;
   cursor: pointer;
