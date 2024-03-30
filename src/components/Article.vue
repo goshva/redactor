@@ -140,24 +140,24 @@ export default {
 <style scoped>
 
 [data-tooltip] {
-    position: relative; /* Относительное позиционирование */ 
+    position: relative;
    }
    [data-tooltip]::after {
-    content: attr(data-tooltip); /* Выводим текст */
-    position: absolute; /* Абсолютное позиционирование */
-    width: 300px; /* Ширина подсказки */
-    left: 0; top: 0; /* Положение подсказки */
-    background: #3989c9; /* Синий цвет фона */
-    color: #fff; /* Цвет текста */
-    padding: 0.5em; /* Поля вокруг текста */
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Параметры тени */
-    pointer-events: none; /* Подсказка */
-    opacity: 0; /* Подсказка невидима */
-    transition: 1s; /* Время появления подсказки */
+    content: attr(data-tooltip);
+    position: absolute;
+    width: 300px;
+    left: 0; top: 0;
+    background: lightgreen;
+    color: black;
+    padding: 0.5em;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    pointer-events: none;
+    opacity: 0;
+    transition: 0.5s;
    } 
    [data-tooltip]:hover::after {
-    opacity: 1; /* Показываем подсказку */
-    left: 300px; /* Положение подсказки */
+    opacity: 1;
+    left: 200px;
    }
 
    ul {
