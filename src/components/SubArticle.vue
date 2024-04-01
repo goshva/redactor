@@ -9,8 +9,10 @@
   </ul>
   <ul class="arr-list" v-else>
     <li class="arr-item">
-      <input class="inp-null" type="text" value="">
-      <div class="key-null key-top"></div>
+      <input class="inp" type="text" value="">
+      <div data-tooltip="customContent" class="key-top">
+        <button class="btn-savee" @click="saveChanges(arrayId, subItem, JSON.parse(name)[subItem].value)">💾</button>
+      </div>
     </li>
   </ul>
 </template>
@@ -115,6 +117,10 @@ export default defineComponent({
   font-size: 40px;
 }
 
+.btn-save-null {
+  width: 144px;
+}
+
 
 .inp {
   border: 1px solid #dadada;
@@ -137,21 +143,6 @@ export default defineComponent({
   border-radius: 20px 0 0 20px;
 }
 
-.key-null {
-  font-size: 20px;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  text-align: center;
-  border: 2px solid #dadada;
-  height: 50px;
-  width: 50%;
-  text-wrap: wrap;
-  border-radius: 0 20px 20px 0;
-  background-color: lightgreen;
-}
-
 .key-top {
   font-size: 20px;
   font-weight: bold;
@@ -162,7 +153,7 @@ export default defineComponent({
   text-align: center;
   border: 2px solid #dadada;
   height: 50px;
-  width: 50%;
+  width: 144px;
   text-wrap: wrap;
   background-color: lightgreen;
   border-radius: 0 20px 20px 0;

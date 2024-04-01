@@ -11,17 +11,10 @@
             <div v-if="key === 'content'">
               <ul class="arr-list">
 
-                <li class="arr-item">
-                  <input  v-if="JSON.parse(item)" :value="JSON.parse(item)['title']" class="inp" type="text">
-                  <div data-tooltip="title" class="key key-top">
-                    <button class="btn-save" @click="saveChanges(array.id, key, item, subItem)">💾</button>
-                  </div>
-                </li>
-
-                <li class="arr-item">
-                  <input  v-if="JSON.parse(item)"  :value="JSON.parse(item)['text']" class="inp" type="text">
-                  <div data-tooltip="text" class="key key-top">
-                    <button class="btn-save" @click="saveChanges(array.id, key, item, subItem)">💾</button>
+                <li class="arr-item" v-for="(value, key) in JSON.parse(item)" :key="key">
+                  <input  v-if="JSON.parse(item)" :value="value" class="inp" type="text" @input="updateValue(key, $event.target.value)">
+                  <div :data-tooltip="key" class="key key-top">
+                    <button class="btn-save" @click="saveChanges(array.id, key, item)">💾</button>
                   </div>
                 </li>
 
@@ -43,7 +36,7 @@
 
               </ul>
             </div>
-
+            
             <div class="keydn" v-if="key === 'content' || key === 'customContent'"></div>
             <div :data-tooltip="key" class="key" v-else>
               <button class="btn-save"   @click="saveChanges(array.id, key, item, subItem)">💾</button>
