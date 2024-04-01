@@ -3,7 +3,7 @@
     <li class="arr-item" v-for="subItem in Object.keys(JSON.parse(name))" :key="subItem">
       <input :class="inp" :value="JSON.parse(name)[subItem].value" class="inp" type="text">
       <div :data-tooltip="'{{ subItem }}'" class="key-top">
-        <button class="btn-savee" @click="$emit('save-changes', arrayId, key, subItem)">💾</button>
+        <button class="btn-savee" @click="$emit('save-changes', arrayId, subItem, )">💾</button>
       </div>
     </li>
   </ul>

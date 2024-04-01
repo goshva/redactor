@@ -26,7 +26,7 @@
             </div>
             <div v-else-if="key === 'customContent'">
               <ul class="arr-list">
-                <SubArticle :name="item" :age="array.id" :arrayId="index" :key="key" @save-changes="saveChanges" />
+                  <SubArticle :name="item" :age="array.id" :arrayId="index" />
               </ul>
             </div>
             <div v-else>
@@ -93,8 +93,27 @@ export default {
     };
 
     const saveChanges = (id, key, field) => {
-  // Save changes implementation
+
   console.log(`Изменения в id: ${id}, Название: ${key}, Содержание: ${field}`);
+
+  const formData = new FormData();
+  formData.append(key, field);
+
+  fetch(`https://tender.one/api/?id=${id}`, {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => {
+    if (response.ok) {
+      console.log('Changes saved successfully!');
+    } else {
+      throw new Error('Error saving changes');
+    }
+  })
+  .catch(error => {
+
+    console.error(error);
+  });
 };
 
     const generateNumberBlock = (index) => {
