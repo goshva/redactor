@@ -1,50 +1,60 @@
 <template>
-    <ul class="arr-list" v-if="!!name">
-
-        <li class="arr-item" v-for="subItem in Object.keys(JSON.parse(name))" :key="subItem">
-          <input :class="inp" :value="JSON.parse(name)[subItem].value" class="inp" type="text">
-          <div :data-tooltip="'{{ subItem }}'" class="key-top">
-            <ButtonSave :age=item :name=subItem :fresh=JSON.parse(name)[subItem].value />
-          </div>
-            
-        </li>
-    </ul>
-    <ul class="arr-list" v-else>
-  <li class="arr-item">
-    <input class="inp-null" type="text" value="">
-    <div data-tooltip="customContent" class="key-null key-top"></div>
-  </li>
-    </ul>
+  <ul class="arr-list" v-if="!!name">
+    <li class="arr-item" v-for="subItem in Object.keys(JSON.parse(name))" :key="subItem">
+      <input :class="inp" :value="JSON.parse(name)[subItem].value" class="inp" type="text">
+      <div :data-tooltip="'{{ subItem }}'" class="key-top">
+        <button class="btn-savee" @click="$emit('save-changes', arrayId, key, subItem)">💾</button>
+      </div>
+    </li>
+  </ul>
+  <ul class="arr-list" v-else>
+    <li class="arr-item">
+      <input class="inp-null" type="text" value="">
+      <div data-tooltip="customContent" class="key-null key-top"></div>
+    </li>
+  </ul>
 </template>
 
 <script>
 import { defineComponent } from 'vue';
-import ButtonSave from './ButtonSave.vue';
-
 
 export default defineComponent({
-    props: {
-        name: {
-            type: String,
-            required: true
-        },
-        age: {
-            type: Number,
-            default: 0
-        }
+  name: 'SubArticle',
+  props: {
+    name: {
+      type: String,
+      required: true
     },
-    components: {
-        ButtonSave,
+    age: {
+      type: Number,
+      default: 0
+    },
+    arrayId: {
+      type: Number,
+      required: true
+    },
+    key: {
+      type: String,
+      required: true
+    },
+    onSaveChanges: {
+      type: Function,
+      required: true
+    }
   },
 
-    setup(props) {
-        return {
-            name: props.name,
-            age: props.age
-        };
-    }
+  setup(props) {
+    return {
+      name: props.name,
+      age: props.age,
+      arrayId: props.arrayId,
+      key: props.key,
+      onSaveChanges: props.onSaveChanges
+    };
+  }
 });
 </script>
+
 <style>
 
 [data-tooltip] {
@@ -85,6 +95,13 @@ export default defineComponent({
   align-items: center;
   width: 100%;
 }
+
+.btn-savee {
+  background-color: transparent;
+  border: unset;
+  font-size: 40px;
+}
+
 
 .inp {
   border: 1px solid #dadada;

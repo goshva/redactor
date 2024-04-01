@@ -12,13 +12,13 @@
                 <li class="arr-item">
                   <input  v-if="JSON.parse(item)" :value="JSON.parse(item)['title']" class="inp" type="text">
                   <div data-tooltip="title" class="key key-top">
-                    <ButtonSave @click="saveChanges" :name="array.name" :age="array.id" fresh="title"/>
+                    <button class="btn-save" @click="saveChanges(array.id, key, item, subItem)">💾</button>
                   </div>
                 </li>
                 <li class="arr-item">
                   <input  v-if="JSON.parse(item)"  :value="JSON.parse(item)['text']" class="inp" type="text">
                   <div data-tooltip="text" class="key key-top">
-                    <ButtonSave @click="saveChanges" :name="array.name" :age="array.id" fresh="title"/>
+                    <button class="btn-save" @click="saveChanges(array.id, key, item, subItem)">💾</button>
                   </div>
                
                 </li>
@@ -26,7 +26,7 @@
             </div>
             <div v-else-if="key === 'customContent'">
               <ul class="arr-list">
-                  <SubArticle :name=item :age=index />
+                <SubArticle :name="item" :age="array.id" :arrayId="index" :key="key" @save-changes="saveChanges" />
               </ul>
             </div>
             <div v-else>
@@ -37,8 +37,8 @@
               </ul>
             </div>
             <div class="keydn" v-if="key === 'content' || key === 'customContent'"></div>
-            <div data-tooltip="{{ key }}" class="key" v-else>
-              <ButtonSave @click="saveChanges" />
+            <div class="key" v-else>
+              <button class="btn-save" @click="saveChanges(array.id, key, item, subItem)">💾</button>
             </div>
           </li>
         </ul>
@@ -55,16 +55,11 @@
 
 <script>
 import { ref } from 'vue';
-import ButtonSave from './ButtonSave.vue';
 import SubArticle from './SubArticle.vue';
 import ButtonShow from './ButtonShow.vue';
 
-
-
 export default {
-  
   components: {
-    ButtonSave,
     SubArticle,
     ButtonShow
   },
@@ -97,11 +92,10 @@ export default {
       });
     };
 
-    const JSONconverter = (string) => {
-     const newString = string
-      console.log(newString)
-     return newString
-    }
+    const saveChanges = (id, key, field) => {
+  // Save changes implementation
+  console.log(`Изменения в id: ${id}, Название: ${key}, Содержание: ${field}`);
+};
 
     const generateNumberBlock = (index) => {
       const numberBlock = contentArrays.value[index]['id']
@@ -123,16 +117,14 @@ export default {
       window.location = url
     }
 
-
     return {
       contentArrays,
       showContentKeys,
       toggleShow,
       generateUrl,
       switchTo,
-      JSONconverter,
-      generateNumberBlock
-
+      generateNumberBlock,
+      saveChanges
     };
   }
 };
@@ -274,6 +266,12 @@ export default {
   display: inline-block;
   font-size: 28px;
   background-color: transparent;
+}
+
+.btn-save {
+  background-color: transparent;
+  border: unset;
+  font-size: 40px;
 }
 
 
