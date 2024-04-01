@@ -12,7 +12,8 @@
               <ul class="arr-list">
 
                 <li class="arr-item" v-for="(value, key) in JSON.parse(item)" :key="key">
-                  <input  v-if="JSON.parse(item)" :value="value" class="inp" type="text" @input="updateValue(key, $event.target.value)">
+                  <input v-if="JSON.parse(item)" :value="value" class="inp" type="text"
+                    @input="updateValue(key, $event.target.value)">
                   <div :data-tooltip="key" class="key key-top">
                     <button class="btn-save" @click="saveChanges(array.id, key, item)">💾</button>
                   </div>
@@ -31,24 +32,21 @@
               <ul class="arr-list">
 
                 <li class="arr-item">
-                  <input class="inp stuff" type="text" :value="item" @input="updateItem(index, key, idx, $event.target.value)">
+                  <input class="inp stuff" type="text" :value="item"
+                    @input="updateItem(index, key, idx, $event.target.value)">
                 </li>
 
               </ul>
             </div>
-            
+
             <div class="keydn" v-if="key === 'content' || key === 'customContent'"></div>
             <div :data-tooltip="key" class="key" v-else>
-              <button class="btn-save"   @click="saveChanges(array.id, key, item, subItem)">💾</button>
+              <button class="btn-save" @click="saveChanges(array.id, key, item, subItem)">💾</button>
             </div>
-            
+
           </li>
         </ul>
-        <ButtonShow
-          :key="index"
-          :contentArrays="contentArrays"
-          @click="toggleShow(index, array.id)"
-        />
+        <ButtonShow :key="index" :contentArrays="contentArrays" @click="toggleShow(index, array.id)" />
       </li>
     </ul>
   </div>
@@ -76,7 +74,7 @@ export default {
 
     fetchJsonFile('https://tender.one/api/');
 
-    const toggleShow = (index,id) => {
+    const toggleShow = (index, id) => {
       console.log(index)
       fetchJsonFile('https://tender.one/api/?id=' + id);
 
@@ -96,25 +94,16 @@ export default {
     const saveChanges = (id, key, field) => {
 
       console.log(`Изменения в id: ${id}, Название: ${key}, Содержание: ${field}`);
-
-      const formData = new FormData();
-      formData.append(key, field);
-
-      fetch(`https://tender.one/api/?id=${id}`, {
-        method: 'POST',
-        body: formData
-      })
-      .then(response => {
-        if (response.ok) {
-          console.log('Changes saved successfully!');
-        } else {
-          throw new Error('Error saving changes');
-        }
-      })
-      .catch(error => {
-
-        console.error(error);
+      const obj = JSON.stringify({
+        id: id,
+        column: key,
+        value: field
       });
+      console.log(obj)
+      fetch(`https://tender.one/api/`, {
+        method: 'POST',
+        body: obj
+      })
     };
 
     const generateNumberBlock = (index) => {
@@ -124,14 +113,14 @@ export default {
     }
 
     const generateUrl = (index) => {
-  const mainUrl = "http://tender.one/"
-  const url = contentArrays.value[index]["url"]
-  if (url === null) {
-    return mainUrl
-  } else {
-    return mainUrl + url
-  }
-}
+      const mainUrl = "http://tender.one/"
+      const url = contentArrays.value[index]["url"]
+      if (url === null) {
+        return mainUrl
+      } else {
+        return mainUrl + url
+      }
+    }
 
     const switchTo = (url) => {
       window.location = url
@@ -151,32 +140,34 @@ export default {
 </script>
 
 <style scoped>
-
 [data-tooltip] {
-    position: relative;
-   }
-   [data-tooltip]::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    width: 300px;
-    left: 0; top: 0;
-    background: lightgreen;
-    color: black;
-    padding: 0.5em;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-    pointer-events: none;
-    opacity: 0;
-    transition: 0.5s;
-   } 
-   [data-tooltip]:hover::after {
-    opacity: 1;
-    left: 200px;
-   }
+  position: relative;
+}
 
-   ul {
-    padding: 0;
-    margin: 0;
-   }
+[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  width: 300px;
+  left: 0;
+  top: 0;
+  background: lightgreen;
+  color: black;
+  padding: 0.5em;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+  opacity: 0;
+  transition: 0.5s;
+}
+
+[data-tooltip]:hover::after {
+  opacity: 1;
+  left: 200px;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
 
 
 .container {
@@ -184,6 +175,7 @@ export default {
   background-color: #f8f9fa;
   margin: 0 auto;
 }
+
 .list-container {
   padding: 0;
   max-width: 1660px;
@@ -244,6 +236,7 @@ export default {
   background-color: lightgreen;
   border-radius: 0 20px 20px 0;
 }
+
 .key-top {
   font-size: 20px;
   font-weight: bold;
@@ -271,7 +264,8 @@ export default {
   border: unset;
   cursor: pointer;
 }
-.stuff{
+
+.stuff {
   box-shadow: 1px 1px 0px 0px;
 }
 
@@ -293,6 +287,4 @@ export default {
   border: unset;
   font-size: 40px;
 }
-
-
 </style>
