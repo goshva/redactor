@@ -42,27 +42,28 @@ export default defineComponent({
     updateValue(key, value) {
       this.$emit('update:name', JSON.stringify({ ...JSON.parse(this.name), [key]: { value } }))
     },
+
     saveChanges(arrayId, subItem, field) {
-  console.log(`Изменения в id: ${arrayId}, Название: ${subItem}, Содержание: ${field}`);
+      console.log(`Изменения в id: ${arrayId}, Название: ${subItem}, Содержание: ${field}`);
 
-  const formData = new FormData();
-  formData.append(subItem, field);
+      const formData = new FormData();
+      formData.append(subItem, field);
 
-  fetch(`https://tender.one/api/?id=${arrayId}`, {
-    method: 'POST',
-    body: formData
-  })
-    .then(response => {
-      if (response.ok) {
-        console.log('Changes saved successfully!');
-      } else {
-        throw new Error('Error saving changes');
-      }
-    })
-    .catch(error => {
-      console.error(error);
-    });
-},
+      fetch(`https://tender.one/api/?id=${arrayId}`, {
+        method: 'POST',
+        body: formData
+      })
+        .then(response => {
+          if (response.ok) {
+            console.log('Изменения успешно сохранены!');
+          } else {
+            throw new Error('Ошибка при сохранении');
+          }
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
   }
 });
 </script>

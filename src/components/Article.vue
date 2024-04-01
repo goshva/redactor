@@ -5,41 +5,50 @@
         <button class="link" @click="switchTo(generateUrl(index))">{{ generateUrl(index) }}</button>
         <p class="num-block"> {{ array.name }}</p>
         <ul class="arr-list">
+
           <li class="arr-item" v-for="(item, key, idx) in array" :key="index"
             :style="{ display: showContentKeys ? 'flex' : (key !== 'content' && key !== 'customContent') ? 'none' : 'flex' }">
             <div v-if="key === 'content'">
               <ul class="arr-list">
+
                 <li class="arr-item">
                   <input  v-if="JSON.parse(item)" :value="JSON.parse(item)['title']" class="inp" type="text">
                   <div data-tooltip="title" class="key key-top">
                     <button class="btn-save" @click="saveChanges(array.id, key, item, subItem)">💾</button>
                   </div>
                 </li>
+
                 <li class="arr-item">
                   <input  v-if="JSON.parse(item)"  :value="JSON.parse(item)['text']" class="inp" type="text">
                   <div data-tooltip="text" class="key key-top">
                     <button class="btn-save" @click="saveChanges(array.id, key, item, subItem)">💾</button>
                   </div>
-               
                 </li>
+
               </ul>
             </div>
             <div v-else-if="key === 'customContent'">
               <ul class="arr-list">
+
                 <SubArticle :name="item" :arrayId="array.id" />
+
               </ul>
             </div>
             <div v-else>
               <ul class="arr-list">
+
                 <li class="arr-item">
                   <input class="inp stuff" type="text" :value="item" @input="updateItem(index, key, idx, $event.target.value)">
                 </li>
+
               </ul>
             </div>
+
             <div class="keydn" v-if="key === 'content' || key === 'customContent'"></div>
-            <div class="key" v-else>
-              <button  data-tooltip="" class="btn-save" @click="saveChanges(array.id, key, item, subItem)">💾</button>
+            <div :data-tooltip="key" class="key" v-else>
+              <button class="btn-save"   @click="saveChanges(array.id, key, item, subItem)">💾</button>
             </div>
+            
           </li>
         </ul>
         <ButtonShow
