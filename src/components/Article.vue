@@ -94,27 +94,27 @@ export default {
 
     const saveChanges = (id, key, field) => {
 
-  console.log(`Изменения в id: ${id}, Название: ${key}, Содержание: ${field}`);
+      console.log(`Изменения в id: ${id}, Название: ${key}, Содержание: ${field}`);
 
-  const formData = new FormData();
-  formData.append(key, field);
+      const formData = new FormData();
+      formData.append(key, field);
 
-  fetch(`https://tender.one/api/?id=${id}`, {
-    method: 'POST',
-    body: formData
-  })
-  .then(response => {
-    if (response.ok) {
-      console.log('Changes saved successfully!');
-    } else {
-      throw new Error('Error saving changes');
-    }
-  })
-  .catch(error => {
+      fetch(`https://tender.one/api/?id=${id}`, {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => {
+        if (response.ok) {
+          console.log('Changes saved successfully!');
+        } else {
+          throw new Error('Error saving changes');
+        }
+      })
+      .catch(error => {
 
-    console.error(error);
-  });
-};
+        console.error(error);
+      });
+    };
 
     const generateNumberBlock = (index) => {
       const numberBlock = contentArrays.value[index]['id']

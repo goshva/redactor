@@ -1,16 +1,16 @@
 <template>
   <ul class="arr-list" v-if="!!name">
     <li class="arr-item" v-for="subItem in Object.keys(JSON.parse(name))" :key="subItem">
-      <input :class="inp" :value="JSON.parse(name)[subItem].value" class="inp" type="text">
-      <div :data-tooltip="'{{ subItem }}'" class="key-top">
-        <button class="btn-savee" @click="$emit('save-changes', arrayId, subItem, )">💾</button>
+      <input :value="JSON.parse(name)[subItem].value" class="inp" type="text" @input="updateValue(subItem, $event.target.value)">
+      <div :data-tooltip="subItem" class="key-top">
+        <button class="btn-savee" @click="saveChanges(arrayId, key, subItem, JSON.parse(name)[subItem].value)">💾</button>
       </div>
     </li>
   </ul>
   <ul class="arr-list" v-else>
     <li class="arr-item">
       <input class="inp-null" type="text" value="">
-      <div data-tooltip="customContent" class="key-null key-top"></div>
+      <div class="key-null key-top"></div>
     </li>
   </ul>
 </template>
@@ -25,10 +25,6 @@ export default defineComponent({
       type: String,
       required: true
     },
-    age: {
-      type: Number,
-      default: 0
-    },
     arrayId: {
       type: Number,
       required: true
@@ -42,15 +38,31 @@ export default defineComponent({
       required: true
     }
   },
+  methods: {
+    updateValue(key, value) {
+      this.$emit('update:name', JSON.stringify({ ...JSON.parse(this.name), [key]: { value } }))
+    },
+    saveChanges(id, key, field) {
+      console.log(`Изменения в id: ${id}, Название: ${key}, Содержание: ${field}`);
 
-  setup(props) {
-    return {
-      name: props.name,
-      age: props.age,
-      arrayId: props.arrayId,
-      key: props.key,
-      onSaveChanges: props.onSaveChanges
-    };
+      const formData = new FormData();
+      formData.append(key, field);
+
+      fetch(`https://tender.one/api/?id=${id}`, {
+        method: 'POST',
+        body: formData
+      })
+        .then(response => {
+          if (response.ok) {
+            console.log('Changes saved successfully!');
+          } else {
+            throw new Error('Error saving changes');
+          }
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
   }
 });
 </script>
