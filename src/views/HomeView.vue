@@ -17,7 +17,7 @@ articlesStore.getAll();
 
 <template>
     <div>
-        <h1>Hi {{authUser?.firstName}}!</h1>
+        <a href="/" class="btn btn-primary" >На главную</a>
         <ul v-if="articles.length" class="mainList">
             <li>
                 <ArticleEditor/>

@@ -1,6 +1,6 @@
 <template>
 
-  <button @click="saveChanges(age,name,fresh)">
+  <button @click="saveChanges">
     💾
   </button>
 </template>

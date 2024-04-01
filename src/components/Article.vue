@@ -1,11 +1,9 @@
 <template>
   <div class="container">
-    <h1>ТЕСТ</h1>
     <ul class="list-container">
       <li class="one-arr" v-for="(array, index) in contentArrays" :key="index">
-        <p>{{ index + 1 }}</p>
         <button class="link" @click="switchTo(generateUrl(index))">{{ generateUrl(index) }}</button>
-        <p class="num-block"> Номер блока: {{ generateNumberBlock(index) }}</p>
+        <p class="num-block"> {{ array.name }}</p>
         <ul class="arr-list">
           <li class="arr-item" v-for="(item, key, idx) in array" :key="index"
             :style="{ display: showContentKeys ? 'flex' : (key !== 'content' && key !== 'customContent') ? 'none' : 'flex' }">
@@ -14,13 +12,13 @@
                 <li class="arr-item">
                   <input  v-if="JSON.parse(item)" :value="JSON.parse(item)['title']" class="inp" type="text">
                   <div data-tooltip="title" class="key key-top">
-                    <ButtonSave @click="saveChanges" />
+                    <ButtonSave @click="saveChanges" :name="array.name" :age="array.id" fresh="title"/>
                   </div>
                 </li>
                 <li class="arr-item">
                   <input  v-if="JSON.parse(item)"  :value="JSON.parse(item)['text']" class="inp" type="text">
                   <div data-tooltip="text" class="key key-top">
-                    <ButtonSave @click="saveChanges" />
+                    <ButtonSave @click="saveChanges" :name="array.name" :age="array.id" fresh="title"/>
                   </div>
                
                 </li>
@@ -47,7 +45,7 @@
         <ButtonShow
           :key="index"
           :contentArrays="contentArrays"
-          @click="toggleShow(index)"
+          @click="toggleShow(index, array.id)"
         />
 
       </li>
@@ -80,9 +78,12 @@ export default {
       contentArrays.value = jsonData;
     };
 
-    fetchJsonFile('/contents.json');
+    fetchJsonFile('https://tender.one/api/');
 
-    const toggleShow = (index) => {
+    const toggleShow = (index,id) => {
+      console.log(index)
+      fetchJsonFile('https://tender.one/api/?id=' + id);
+
       showContentKeys.value = !showContentKeys.value;
       contentArrays.value[index] = contentArrays.value[index].map((it, key) => {
         if (key !== 'content' && key !== 'customContent') {
