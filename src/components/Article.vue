@@ -32,13 +32,13 @@
             <div v-else>
               <ul class="arr-list">
                 <li class="arr-item">
-                  <input  class="inp stuff" type="text" :value="item" @input="updateItem(index, key, idx, $event.target.value)">
+                  <input class="inp stuff" type="text" :value="item" @input="updateItem(index, key, idx, $event.target.value)">
                 </li>
               </ul>
             </div>
             <div class="keydn" v-if="key === 'content' || key === 'customContent'"></div>
             <div class="key" v-else>
-              <button class="btn-save" @click="saveChanges(array.id, key, item, subItem)">💾</button>
+              <button  data-tooltip="" class="btn-save" @click="saveChanges(array.id, key, item, subItem)">💾</button>
             </div>
           </li>
         </ul>
@@ -47,7 +47,6 @@
           :contentArrays="contentArrays"
           @click="toggleShow(index, array.id)"
         />
-
       </li>
     </ul>
   </div>
