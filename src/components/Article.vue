@@ -26,7 +26,7 @@
             </div>
             <div v-else-if="key === 'customContent'">
               <ul class="arr-list">
-                  <SubArticle :name="item" :age="array.id" :arrayId="index" />
+                <SubArticle :name="item" :arrayId="array.id" />
               </ul>
             </div>
             <div v-else>

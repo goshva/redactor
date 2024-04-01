@@ -3,7 +3,7 @@
     <li class="arr-item" v-for="subItem in Object.keys(JSON.parse(name))" :key="subItem">
       <input :value="JSON.parse(name)[subItem].value" class="inp" type="text" @input="updateValue(subItem, $event.target.value)">
       <div :data-tooltip="subItem" class="key-top">
-        <button class="btn-savee" @click="saveChanges(id, subItem, JSON.parse(name)[subItem].value)">💾</button>
+        <button class="btn-savee" @click="saveChanges(arrayId, subItem, JSON.parse(name)[subItem].value)">💾</button>
       </div>
     </li>
   </ul>
@@ -25,7 +25,7 @@ export default defineComponent({
       type: String,
       required: true
     },
-    id: {
+    arrayId: {
       type: Number,
       required: true
     },
@@ -42,13 +42,13 @@ export default defineComponent({
     updateValue(key, value) {
       this.$emit('update:name', JSON.stringify({ ...JSON.parse(this.name), [key]: { value } }))
     },
-    saveChanges(id, subItem, field) {
-  console.log(`Изменения в id: ${id}, Название: ${subItem}, Содержание: ${field}`);
+    saveChanges(arrayId, subItem, field) {
+  console.log(`Изменения в id: ${arrayId}, Название: ${subItem}, Содержание: ${field}`);
 
   const formData = new FormData();
   formData.append(subItem, field);
 
-  fetch(`https://tender.one/api/?id=${id}`, {
+  fetch(`https://tender.one/api/?id=${arrayId}`, {
     method: 'POST',
     body: formData
   })
