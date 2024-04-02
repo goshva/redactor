@@ -12,10 +12,16 @@ function request(method) {
         const requestOptions = {
             method,
             headers: authHeader(url)
+            
         };
+
         if (body) {
             requestOptions.headers['Content-Type'] = 'application/json';
+
+
             requestOptions.body = JSON.stringify(body);
+
+        
         }
         return fetch(url, requestOptions).then(handleResponse);
     }
@@ -27,7 +33,7 @@ function authHeader(url) {
     // return auth header with jwt if user is logged in and request is to the api url
     const { user } = useAuthStore();
     const isLoggedIn = !!user?.token;
-    const isApiUrl = url.startsWith(import.meta.env.VITE_API_URL);
+    const isApiUrl = url.startsWith(import.meta.env.VITE_FAKEAPI_URL);
     if (isLoggedIn && isApiUrl) {
         return { Authorization: `Bearer ${user.token}` };
     } else {

@@ -3,7 +3,7 @@
     <ul class="list-container">
       <li class="one-arr" v-for="(array, index) in contentArrays" :key="index">
         <button class="link" @click="switchTo(generateUrl(index))">{{ generateUrl(index) }}</button>
-        <p class="num-block"> {{ array.name }}</p>
+        <p class="num-block"> {{ array }} / {{ index }}</p>
         <ul class="arr-list">
 
           <li class="arr-item" v-for="(item, key, idx) in array" :key="index"
@@ -23,9 +23,7 @@
             </div>
             <div v-else-if="key === 'customContent'">
               <ul class="arr-list">
-
                 <SubArticle :name="item" :arrayId="array.id" />
-
               </ul>
             </div>
             <div v-else>
@@ -62,17 +60,37 @@ export default {
     SubArticle,
     ButtonShow
   },
+  name: 'MainArticle',
+  props: {
+    name: {
+      type: String,
+      required: true
+    },
+    ArrayId: {
+      type: Number,
+      required: true
+    },
+    //contentArrays
+    contentArrays: {
+      type: Object,
+      required: true
+    }, 
+    key: {
+      type: String,
+      required: true
+    }
+  },
   setup() {
     const contentArrays = ref([]);
     const showContentKeys = ref(false);
-
+/*
     const fetchJsonFile = async (url) => {
       const response = await fetch(url);
       const jsonData = await response.json();
       contentArrays.value = jsonData;
     };
-
-    fetchJsonFile('https://tender.one/api/');
+*/
+   // fetchJsonFile('https://tender.one/api/');
 
     const toggleShow = (index, id) => {
       console.log(index)
@@ -114,8 +132,8 @@ export default {
 
     const generateUrl = (index) => {
       const mainUrl = "http://tender.one/"
-      const url = contentArrays.value[index]["url"]
-      if (url === null) {
+      const url = contentArrays.value[index] ? contentArrays.value[index]["url"] : null
+      if ( url === null) {
         return mainUrl
       } else {
         return mainUrl + url
@@ -127,7 +145,7 @@ export default {
     }
 
     return {
-      contentArrays,
+      //contentArrays,
       showContentKeys,
       toggleShow,
       generateUrl,
