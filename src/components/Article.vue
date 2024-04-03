@@ -22,7 +22,10 @@
             </div>
             <div v-else-if="key === 'customContent'">
               <ul class="arr-list">
-                <SubArticle :name="item" :arrayId="contentArrays.id" />
+                <li v-for="(value, key) in JSON.parse(item)" :key="key" class="arr-item">
+               <!-- <SubArticle :name="item" :arrayId="contentArrays.id" />-->
+                <SubArticle :name="key" :ArrayId="ArrayId" :contentArrays="value" /> 
+                </li>
               </ul>
             </div>
             
@@ -30,7 +33,7 @@
               <ul class="arr-list">
                 <li class="arr-item">
                   <input class="inp stuff" type="text" :value="item"
-                    @input="updateItem(index, key, idx, $event.target.value)">
+                    @input="updateItem(key, idx, $event.target.value)">
                 </li>
 
               </ul>
@@ -43,7 +46,7 @@
 
           </li>
         </ul>
-        <ButtonShow :key="index" :contentArrays="contentArrays" @click="toggleShow(index, array.id)" />
+        <ButtonShow  :contentArrays="contentArrays" @click="toggleShow(array.id)" />
       </li>
     </ul>
   </div>

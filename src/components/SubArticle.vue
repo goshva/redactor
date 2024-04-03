@@ -1,11 +1,15 @@
 <template>
   <ul class="arr-list">
-    <li class="arr-item" v-for="subItem in Object.keys(JSON.parse(name))" :key="subItem">
-      <input :value="JSON.parse(name)[subItem].value" class="inp" type="text" @input="updateValue(subItem, $event.target.value)">
-      <div :title="subItem" class="key-top">
-        <button class="btn-savee" @click="saveChanges(arrayId, subItem, newValue)">💾</button>
-      </div>
-    </li>
+    <!--<li class="arr-item" v-for="subItem in Object.keys(JSON.parse(name))" :key="subItem"> -->
+
+    <input v-if="contentArrays.type == 'input'" :value="contentArrays.value" class="inp" type="text"
+      @input="updateValue(subItem)">
+    <textarea v-if="contentArrays.type == 'textarea'" :value="contentArrays.value" class="int" type="text"
+      @input="updateValue(subItem, $event)" cols="108" rows="2"></textarea>
+    <div :title="name" class="key key-top">
+      <button class="btn-savee" @click="saveChanges(ArrayId,contentArrays.value, name)">💾</button>
+    </div>
+
   </ul>
 
 
@@ -21,55 +25,59 @@ export default defineComponent({
       type: String,
       required: true
     },
-    arrayId: {
+    ArrayId: {
       type: Number,
       required: true
     },
-    key: {
-      type: String,
-      required: true
-    },
-    onSaveChanges: {
-      type: Function,
+    contentArrays: {
+      type: Object,
       required: true
     }
+
   },
   methods: {
-  updateValue(key, value) {
-    let newValue = {...JSON.parse(this.name), [key]: { value } };
-    this.$emit('update:name', newValue);
-    this.saveChanges(this.arrayId, key, newValue[key].value);
-  },
+    updateValue(key, value) {
+      let newValue = { ...JSON.parse(this.name), [key]: { value } };
+      this.$emit('update:name', newValue);
+      this.saveChanges(this.arrayId, key, newValue[key].value);
+    },
 
-  saveChanges(arrayId, key, field) {
-    console.log(`Изменения в id: ${arrayId}, Название: ${key}, Содержание: ${field}`);
-  },
-}
+    saveChanges(arrayId, key, field) {
+      console.log(`Изменения в id: ${arrayId}, Название: ${key}, Содержание: ${field}`);
+    },
+  }
 });
 </script>
 
 <style>
+.int {
+  width: 80%;
+  height: 100px
+}
 
 [data-tooltip] {
-    position: relative;
-   }
-   [data-tooltip]::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    width: 300px;
-    left: 0; top: 0;
-    background: lightgreen;
-    color: black;
-    padding: 0.5em;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-    pointer-events: none;
-    opacity: 0;
-    transition: 0.5s;
-   } 
-   [data-tooltip]:hover::after {
-    opacity: 1;
-    left: 200px;
-   }
+  position: relative;
+}
+
+[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  width: 300px;
+  left: 0;
+  top: 0;
+  background: lightgreen;
+  color: black;
+  padding: 0.5em;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+  opacity: 0;
+  transition: 0.5s;
+}
+
+[data-tooltip]:hover::after {
+  opacity: 1;
+  left: 200px;
+}
 
 .block {
   width: 100%;
@@ -83,6 +91,7 @@ export default defineComponent({
   gap: 30px;
   width: 100%;
 }
+
 .arr-item {
   display: flex;
   align-items: center;
