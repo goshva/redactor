@@ -14,7 +14,7 @@
                 <li class="arr-item" v-for="(value, key) in JSON.parse(item)" :key="key">
                   <input v-if="JSON.parse(item)" :value="value" class="inp" type="text"
                     @input="updateValue(key, $event.target.value)">
-                  <div :title="key" class="key key-top">
+                  <div :data-tooltip="key" :title="key" class="key key-top">
                     <button class="btn-save" @click="saveChanges(ArrayId, key,  value)">💾</button>
                   </div>
                 </li>
@@ -40,7 +40,7 @@
             </div>
 
             <div class="keydn" v-if="key === 'content' || key === 'customContent'"></div>
-            <div :title="key" class="key" v-else>
+            <div :data-tooltip="key" :title="key" class="key" v-else>
               <button class="btn-save" @click="saveChanges(array.id, key, item, subItem)">💾</button>
             </div>
 
@@ -79,16 +79,8 @@ export default {
     }
   },
   setup() {
-    //const contentArrays = ref([]);
+
     const showContentKeys = ref(false);
-/*
-    const fetchJsonFile = async (url) => {
-      const response = await fetch(url);
-      const jsonData = await response.json();
-      contentArrays.value = jsonData;
-    };
-*/
-   // fetchJsonFile('https://tender.one/api/');
 
     const toggleShow = (index, id) => {
       console.log(index)

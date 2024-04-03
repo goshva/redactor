@@ -1,7 +1,5 @@
 <template>
   <ul class="arr-list">
-    <!--<li class="arr-item" v-for="subItem in Object.keys(JSON.parse(name))" :key="subItem"> -->
-
     <input v-if="contentArrays.type == 'input'" :value="contentArrays.value" class="inp" type="text"
       @input="updateValue(subItem)">
     <textarea v-if="contentArrays.type == 'textarea'" :value="contentArrays.value" class="int" type="text"
@@ -9,10 +7,7 @@
     <div :title="name" class="key key-top">
       <button class="btn-savee" @click="saveChanges(ArrayId,contentArrays.value, name)">💾</button>
     </div>
-
   </ul>
-
-
 </template>
 
 <script>
