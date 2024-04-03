@@ -2,7 +2,7 @@
   <ul class="arr-list">
     <li class="arr-item" v-for="subItem in Object.keys(JSON.parse(name))" :key="subItem">
       <input :value="JSON.parse(name)[subItem].value" class="inp" type="text" @input="updateValue(subItem, $event.target.value)">
-      <div :title="subItem" class="key-top">
+      <div :data-tooltip="subItem" :title="subItem" class="key-top">
         <button class="btn-savee" @click="saveChanges(arrayId, subItem, newValue)">💾</button>
       </div>
     </li>
