@@ -1,12 +1,12 @@
 <template>
   <div class="container">
     <ul class="list-container">
-      <li class="one-arr" v-for="(array, index) in contentArrays" :key="index">
-        <button class="link" @click="switchTo(generateUrl(index))">{{ generateUrl(index) }}</button>
-        <p class="num-block"> {{ array }} / {{ index }}</p>
+      <li class="one-arr">
+        <button class="link" @click="switchTo(generateUrl( contentArrays.url))">{{ generateUrl( contentArrays.url) }}</button>
+        <p class="num-block"> {{ name }} / {{ ArrayId }}</p>
         <ul class="arr-list">
 
-          <li class="arr-item" v-for="(item, key, idx) in array" :key="index"
+          <li class="arr-item" v-for="(item, key, idx) in contentArrays" :key="key"
             :style="{ display: showContentKeys ? 'flex' : (key !== 'content' && key !== 'customContent') ? 'none' : 'flex' }">
             <div v-if="key === 'content'">
               <ul class="arr-list">
@@ -14,21 +14,20 @@
                 <li class="arr-item" v-for="(value, key) in JSON.parse(item)" :key="key">
                   <input v-if="JSON.parse(item)" :value="value" class="inp" type="text"
                     @input="updateValue(key, $event.target.value)">
-                  <div :data-tooltip="key" class="key key-top">
-                    <button class="btn-save" @click="saveChanges(array.id, key, item)">💾</button>
+                  <div :title="key" class="key key-top">
+                    <button class="btn-save" @click="saveChanges(ArrayId, key,  value)">💾</button>
                   </div>
                 </li>
-
               </ul>
             </div>
             <div v-else-if="key === 'customContent'">
               <ul class="arr-list">
-                <SubArticle :name="item" :arrayId="array.id" />
+                <SubArticle :name="item" :arrayId="contentArrays.id" />
               </ul>
             </div>
+            
             <div v-else>
               <ul class="arr-list">
-
                 <li class="arr-item">
                   <input class="inp stuff" type="text" :value="item"
                     @input="updateItem(index, key, idx, $event.target.value)">
@@ -38,7 +37,7 @@
             </div>
 
             <div class="keydn" v-if="key === 'content' || key === 'customContent'"></div>
-            <div :data-tooltip="key" class="key" v-else>
+            <div :title="key" class="key" v-else>
               <button class="btn-save" @click="saveChanges(array.id, key, item, subItem)">💾</button>
             </div>
 
@@ -74,14 +73,10 @@ export default {
     contentArrays: {
       type: Object,
       required: true
-    }, 
-    key: {
-      type: String,
-      required: true
     }
   },
   setup() {
-    const contentArrays = ref([]);
+    //const contentArrays = ref([]);
     const showContentKeys = ref(false);
 /*
     const fetchJsonFile = async (url) => {
@@ -132,7 +127,7 @@ export default {
 
     const generateUrl = (index) => {
       const mainUrl = "http://tender.one/"
-      const url = contentArrays.value[index] ? contentArrays.value[index]["url"] : null
+      const url = index? index : null
       if ( url === null) {
         return mainUrl
       } else {

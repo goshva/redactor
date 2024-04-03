@@ -9,7 +9,7 @@ const authStore = useAuthStore();
 const { user: authUser } = storeToRefs(authStore);
 
 const articlesStore = useArticlesStore();
-const { articles,articlesList } = storeToRefs(articlesStore);
+const { articles, articlesList } = storeToRefs(articlesStore);
 
 
 /*
@@ -33,7 +33,7 @@ const handleScroll = () => {
 
 onMounted(() => {
     articlesStore.getAllList().then(() => {
-     articlesStore.appendNewArticle();
+        articlesStore.appendNewArticle();
     })
     window.addEventListener('scroll', handleScroll);
 });
@@ -46,11 +46,9 @@ onBeforeUnmount(() => {
 <template>
     <div>
         <a href="/" class="btn btn-primary">На главную</a>
-        {{ articles }}
         <ul v-if="articles.length" class="mainList" id="observerElement">
-            <li v-for="article in articles"  :key="article.id">
-                {{ article.name }}
-                <ArticleEditor :name="article.name" :ArrayId="article.id" :contentArrays="article"/>
+            <li v-for="article in articles" :key="article.id">
+                <ArticleEditor :name="article.name" :ArrayId="article.id" :contentArrays="article" />
             </li>
         </ul>
         <div v-if="articles.loading" class="spinner-border spinner-border-sm"></div>
