@@ -1,20 +1,14 @@
 <template>
-  <ul class="arr-list" v-if="!!name">
+  <ul class="arr-list">
     <li class="arr-item" v-for="subItem in Object.keys(JSON.parse(name))" :key="subItem">
       <input :value="JSON.parse(name)[subItem].value" class="inp" type="text" @input="updateValue(subItem, $event.target.value)">
       <div :title="subItem" class="key-top">
-        <button class="btn-savee" @click="saveChanges(arrayId, subItem, JSON.parse(name)[subItem].value)">💾</button>
+        <button class="btn-savee" @click="saveChanges(arrayId, subItem, newValue)">💾</button>
       </div>
     </li>
   </ul>
-  <ul class="arr-list" v-else>
-    <li class="arr-item">
-      <input class="inp" type="text" value="">
-      <div :title="customContent" class="key-top">
-        <button class="btn-savee" @click="saveChanges(arrayId, subItem, JSON.parse(name)[subItem].value)">💾</button>
-      </div>
-    </li>
-  </ul>
+
+
 </template>
 
 <script>
@@ -41,32 +35,16 @@ export default defineComponent({
     }
   },
   methods: {
-    updateValue(key, value) {
-      this.$emit('update:name', JSON.stringify({ ...JSON.parse(this.name), [key]: { value } }))
-    },
+  updateValue(key, value) {
+    let newValue = {...JSON.parse(this.name), [key]: { value } };
+    this.$emit('update:name', newValue);
+    this.saveChanges(this.arrayId, key, newValue[key].value);
+  },
 
-    saveChanges(arrayId, subItem, field) {
-      console.log(`Изменения в id: ${arrayId}, Название: ${subItem}, Содержание: ${field}`);
-
-      const formData = new FormData();
-      formData.append(subItem, field);
-
-      fetch(`https://tender.one/api/?id=${arrayId}`, {
-        method: 'POST',
-        body: formData
-      })
-        .then(response => {
-          if (response.ok) {
-            console.log('Изменения успешно сохранены!');
-          } else {
-            throw new Error('Ошибка при сохранении');
-          }
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    },
-  }
+  saveChanges(arrayId, key, field) {
+    console.log(`Изменения в id: ${arrayId}, Название: ${key}, Содержание: ${field}`);
+  },
+}
 });
 </script>
 
