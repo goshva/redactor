@@ -83,13 +83,10 @@ export default {
     const showContentKeys = ref(false);
 
     const toggleShow = (index, id) => {
-      console.log(index)
       fetchJsonFile('https://tender.one/api/?id=' + id);
-
       showContentKeys.value = !showContentKeys.value;
       contentArrays.value[index] = contentArrays.value[index].map((it, key) => {
         if (key !== 'content' && key !== 'customContent') {
-          console.log(showContentKeys.value)
           return {
             ...it,
             show: showContentKeys.value
@@ -107,7 +104,6 @@ export default {
         column: key,
         value: field
       });
-      console.log(obj)
       fetch(`https://tender.one/api/`, {
         method: 'POST',
         body: obj
@@ -116,7 +112,6 @@ export default {
 
     const generateNumberBlock = (index) => {
       const numberBlock = contentArrays.value[index]['id']
-      console.log('numberBlock');
       return numberBlock
     }
 

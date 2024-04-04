@@ -6,7 +6,7 @@ header("Access-Control-Allow-Headers: X-Requested-With");
 
 $dbHost = 'localhost';
 $dbName = 'u0836920_newtender.one';
-$dbUser = 'goshva';
+$dbUser = 'u0836920_newtt';
 $dbPassword = '';
 
 try {
@@ -15,16 +15,16 @@ try {
 } catch (PDOException $e) {
     die("Could not connect to the database $dbName :" . $e->getMessage());
 }
-if (empty($_GET)) {
+if (empty($_GET) && !empty($_POST)) {
     $sql = "SELECT id FROM croo_contents";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    $ids = array();
-    foreach ($results as $result) {
-        $ids[] = $result['id'];
-    }
-    echo json_encode($ids);
+    //$ids = array();
+    //foreach ($results as $result) {
+    //    $ids[] = $result['id'];
+    //}
+    echo json_encode($results);
 }
 
 elseif(isset($_GET['id'])){
@@ -33,9 +33,28 @@ elseif(isset($_GET['id'])){
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    echo json_encode($results[0]);
+    if (isset($results[0])) {
+        echo json_encode($results[0]);
+    } else {
+	http_response_code(404); 
+    	
+    };
 
-} else {
+}
+
+elseif(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') { 
+    $var = json_decode(file_get_contents("php://input"),true);
+    $sql = "UPDATE `croo_contents` SET ". $var["column"]." = :value WHERE `croo_contents`.`id` = :id;";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(":value", $var["value"]);
+    $stmt->bindValue(":id", $var["id"]);
+    $stmt->execute();
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    echo json_encode($results);
+
+}
+
+else {
     $sql = "SELECT * FROM croo_contents LIMIT 1";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();

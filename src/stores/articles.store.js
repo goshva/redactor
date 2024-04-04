@@ -17,15 +17,11 @@ export const useArticlesStore = defineStore({
             //this.articles = { loading: true };
             fetchWrapper.get(APIUrl)
                 .then(articlesListServer => {
-                    console.log(articlesListServer)
                     this.articlesList = articlesListServer.map(item => item.id);
-                    console.log(articlesListServer.map(item => item.id));
-                    console.log(this.articlesList[6])
                 })
                 .catch(error => this.articlesList = { error })
         },
         async appendNewArticle() {
-            console.log(this.articlesList)
             fetchWrapper.get(APIUrl+"?id="+this.lastArticle)
                 .then(article => {
                     this.articles.push(article)
