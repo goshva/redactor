@@ -15,7 +15,7 @@
                   <input v-if="JSON.parse(item)" :value="value" class="inp" type="text"
                     @input="updateValue(key, $event.target.value)">
                   <div :data-tooltip="key" :title="key" class="key">
-                    <button class="btn-save" @click="saveChanges(ArrayId, key,  value)">💾</button>
+                    <button class="btn-save" @click="saveChanges(ArrayId, name, value)">💾</button>
                   </div>
                 </li>
               </ul>
@@ -23,7 +23,6 @@
             <div v-else-if="key === 'customContent' && !!item">
               <ul class="arr-list">
                 <li v-for="(value, key) in JSON.parse(item)" :key="key" class="arr-item">
-               <!-- <SubArticle :name="item" :arrayId="contentArrays.id" />-->
                 <SubArticle :name="key" :ArrayId="ArrayId" :contentArrays="value" /> 
                 </li>
               </ul>
@@ -96,18 +95,12 @@ export default {
       });
     };
 
-    const saveChanges = (id, key, field) => {
+    const updateValue = (event, value) => { 
+      contentArray.value = event.target.value; 
+    };
 
-      console.log(`Изменения в id: ${id}, Название: ${key}, Содержание: ${field}`);
-      const obj = JSON.stringify({
-        id: id,
-        column: key,
-        value: field
-      });
-      fetch(`https://tender.one/api/`, {
-        method: 'POST',
-        body: obj
-      })
+    const saveChanges = (arrayId, name, value) => { 
+      console.log(`Изменения в id: ${arrayId}, Название: ${name}, Содержание: ${value}`); 
     };
 
     const generateNumberBlock = (index) => {
@@ -136,7 +129,8 @@ export default {
       generateUrl,
       switchTo,
       generateNumberBlock,
-      saveChanges
+      saveChanges,
+      updateValue
     };
   }
 };
