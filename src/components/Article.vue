@@ -13,11 +13,12 @@
 
                 <li class="arr-item" v-for="(value, key) in JSON.parse(item)" :key="key">
                   <input v-if="JSON.parse(item)" :value="value" class="inp" type="text"
-    @input="updateValue($event, {value})">{{ value }}
-    <div :data-tooltip="key" :title="key" class="key">
-        <button class="btn-save" @click="saveChanges(ArrayId, {key}, value)">💾</button>
-    </div>
-</li>
+                    @input="updateValue($event, {value})">
+                    <div :data-tooltip="key" :title="key" class="key">
+                        <button class="btn-save" @click="saveChanges(ArrayId, {key}, value)">💾</button>
+                    </div>
+                </li>
+
               </ul>
             </div>
             <div v-else-if="key === 'customContent' && !!item">
@@ -98,11 +99,11 @@ export default {
     const updateValue = (event, name, value) => {
       name.value = event.target.value;
         console.log(name.value);
-};
+    };
 
-const saveChanges = (arrayId, name, value) => { 
-    console.log(`Изменения в id: ${arrayId}, Название: ${name.key}, Содержание: ${value}`); 
-};
+    const saveChanges = (arrayId, name, value) => { 
+        console.log(`Изменения в id: ${arrayId}, Название: ${name.key}, Содержание: ${value}`); 
+    };
 
 
     const generateNumberBlock = (index) => {
