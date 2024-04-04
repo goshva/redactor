@@ -21,13 +21,19 @@ export const useArticlesStore = defineStore({
                 })
                 .catch(error => this.articlesList = { error })
         },
+        
         async appendNewArticle() {
-            fetchWrapper.get(APIUrl+"?id="+this.lastArticle)
-                .then(article => {
-                    this.articles.push(article)
-                })
-                .catch(error => this.article = { error })
-            this.lastArticle++
-        }
+          const getNextArticle = async (id) => {
+              try {
+                  const article = await fetchWrapper.get(APIUrl + "?id=" + id);
+                  this.articles.push(article);
+                  this.lastArticle = id + 1;
+              } catch (error) {
+                  await getNextArticle(id + 1);
+              }
+          };
+      
+          await getNextArticle(this.lastArticle);
+      }
     }
 });
