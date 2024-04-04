@@ -4,10 +4,9 @@
       <li class="one-arr">
         <button class="link" @click="switchTo(generateUrl( contentArrays.url))">{{ generateUrl( contentArrays.url) }}</button>
         <p class="num-block"> {{ name }} / {{ ArrayId }}</p>
-        <ul class="arr-list">
+        <ul class="arr-list" v-show="showContentKeys">
 
-          <li class="arr-item" v-for="(item, key, idx) in contentArrays" :key="key"
-            :style="{ display: showContentKeys ? 'flex' : (key !== 'content' && key !== 'customContent') ? 'none' : 'flex' }">
+          <li class="arr-item" v-for="(item, key, idx) in contentArrays" :key="key">
             <div v-if="key === 'content'">
               <ul v-if="item" class="arr-list">
 
@@ -21,7 +20,7 @@
 
               </ul>
             </div>
-            <div v-else-if="key === 'customContent' && !!item">
+            <div v-else-if="key === 'customContent' &&!!item">
               <ul class="arr-list">
                 <li v-for="(value, key) in JSON.parse(item)" :key="key" class="arr-item">
                 <SubArticle :name="key" :ArrayId="ArrayId" :contentArrays="value" /> 
@@ -46,7 +45,7 @@
 
           </li>
         </ul>
-        <ButtonShow  :contentArrays="contentArrays" @click="toggleShow(array.id)" />
+        <ButtonShow @click="toggleShow" />
       </li>
     </ul>
   </div>
@@ -79,21 +78,10 @@ export default {
     }
   },
   setup() {
-
     const showContentKeys = ref(false);
 
-    const toggleShow = (index, id) => {
-      fetchJsonFile('https://tender.one/api/?id=' + id);
-      showContentKeys.value = !showContentKeys.value;
-      contentArrays.value[index] = contentArrays.value[index].map((it, key) => {
-        if (key !== 'content' && key !== 'customContent') {
-          return {
-            ...it,
-            show: showContentKeys.value
-          }
-        }
-        return it;
-      });
+    const toggleShow = () => {
+      showContentKeys.value =!showContentKeys.value;
     };
 
     const updateValue = (event, name, value) => {
@@ -104,7 +92,6 @@ export default {
     const saveChanges = (arrayId, name, value) => { 
         console.log(`Изменения в id: ${arrayId}, Название: ${name.key}, Содержание: ${value}`); 
     };
-
 
     const generateNumberBlock = (index) => {
       const numberBlock = contentArrays.value[index]['id']
@@ -126,14 +113,13 @@ export default {
     }
 
     return {
-      //contentArrays,
-      showContentKeys,
-      toggleShow,
       generateUrl,
       switchTo,
       generateNumberBlock,
       saveChanges,
-      updateValue
+      updateValue,
+      toggleShow,
+      showContentKeys
     };
   }
 };
