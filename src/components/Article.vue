@@ -9,7 +9,7 @@
           <li class="arr-item" v-for="(item, key, idx) in contentArrays" :key="key"
             :style="{ display: showContentKeys ? 'flex' : (key !== 'content' && key !== 'customContent') ? 'none' : 'flex' }">
             <div v-if="key === 'content'">
-              <ul class="arr-list">
+              <ul v-if="item" class="arr-list">
 
                 <li class="arr-item" v-for="(value, key) in JSON.parse(item)" :key="key">
                   <input v-if="JSON.parse(item)" :value="value" class="inp" type="text"
@@ -20,7 +20,7 @@
                 </li>
               </ul>
             </div>
-            <div v-else-if="key === 'customContent'">
+            <div v-else-if="key === 'customContent' && !!item">
               <ul class="arr-list">
                 <li v-for="(value, key) in JSON.parse(item)" :key="key" class="arr-item">
                <!-- <SubArticle :name="item" :arrayId="contentArrays.id" />-->
