@@ -1,63 +1,61 @@
-<template>
-  <ul  v-if="!!name" class="arr-list">
-    <li class="arr-item">
-      <input v-if="contentArrays.type == 'input'" :value="contentArrays.value" class="inp" type="text"
-        @input="updateValue(subItem)">
-      <textarea v-else-if="contentArrays.type == 'textarea'" :value="contentArrays.value" class="int" type="text"
-        @input="updateValue(subItem, $event)" cols="108" rows="2"></textarea>
-      <input v-else-if="contentArrays.type == 'link'" :value="contentArrays.value" class="inp" type="text"
-        @input="updateValue(subItem, $event)" cols="108" rows="2">
-      <input v-else-if="contentArrays.type == 'image'" :value="contentArrays.value" class="inp" type="text"
-        @input="updateValue(subItem, $event)" cols="108" rows="2">
-      <div :data-tooltip="name" :title="name" class="key key-top">
-        <button v-if="contentArrays.type == 'input'" class="btn-reset btn-savee-input" @click="saveChanges(ArrayId,contentArrays.value, name)">💾</button>
-        <button v-else  @click="saveChanges(ArrayId,contentArrays.value, name)" class="btn-reset btn-savee-textarea">💾</button>
-      </div>
-    </li>
-  </ul>
-  <ul class="arr-list" v-else>
-    <li class="arr-item">
-      <input class="inp" type="text" value="">
-      <div class="key-null key-top">
-        <button class="btn-reset btn-savee-input" @click="saveChanges(ArrayId,contentArrays.value, name)">💾</button>
-      </div>
-    </li>
-  </ul>
-</template>
+<template> 
+  <ul v-if="!!name" class="arr-list"> 
+    <li class="arr-item"> 
+      <input v-if="contentArrays.type == 'input'" :value="contentArrays.value" class="inp" type="text" 
+        @input="updateValue($event, contentArrays)"> 
+      <textarea v-else-if="contentArrays.type == 'textarea'" :value="contentArrays.value" class="int" type="text" 
+        @input="updateValue($event, contentArrays)" cols="108" rows="2"></textarea> 
+      <input v-else-if="contentArrays.type == 'link'" :value="contentArrays.value" class="inp" type="text" 
+        @input="updateValue($event, contentArrays)" cols="108" rows="2"> 
+      <input v-else-if="contentArrays.type == 'image'" :value="contentArrays.value" class="inp" type="text" 
+        @input="updateValue($event, contentArrays)" cols="108" rows="2"> 
+      <div :data-tooltip="name" :title="name" class="key key-top"> 
+        <button v-if="contentArrays.type == 'input'" class="btn-reset btn-savee-input" @click="saveChanges(ArrayId, contentArrays.value, name, contentArrays.type)">💾</button> 
+        <button v-else @click="saveChanges(ArrayId, contentArrays.value, name, contentArrays.type)" class="btn-reset btn-savee-textarea">💾</button> 
+      </div> 
+    </li> 
+  </ul> 
+  <ul class="arr-list" v-else> 
+    <li class="arr-item"> 
+      <input class="inp" type="text" value=""> 
+      <div class="key-null key-top"> 
+        <button class="btn-reset btn-savee-input" @click="saveChanges(ArrayId, '', name, 'input')">💾</button> 
+      </div> 
+    </li> 
+  </ul> 
+</template> 
+ 
+<script> 
+import { defineComponent } from 'vue'; 
+ 
+export default defineComponent({ 
+  name: 'SubArticle', 
+  props: { 
+    name: { 
+      type: String, 
+      required: true 
+    }, 
+    ArrayId: { 
+      type: Number, 
+      required: true 
+    }, 
+    contentArrays: { 
+      type: Object, 
+      required: true 
+    } 
+ 
+  }, 
+  methods: { 
+    updateValue(event, contentArray) { 
+      contentArray.value = event.target.value; 
+    }, 
+    saveChanges(arrayId, key, field, type) { 
+      console.log(`Изменения в id: ${arrayId}, Название: ${field}, Содержание: ${key}, Тип: ${type}`); 
+    }, 
+  } 
+}); 
+</script> 
 
-<script>
-import { defineComponent } from 'vue';
-
-export default defineComponent({
-  name: 'SubArticle',
-  props: {
-    name: {
-      type: String,
-      required: true
-    },
-    ArrayId: {
-      type: Number,
-      required: true
-    },
-    contentArrays: {
-      type: Object,
-      required: true
-    }
-
-  },
-  methods: {
-    updateValue(key, value) {
-      let newValue = { ...JSON.parse(this.name), [key]: { value } };
-      this.$emit('update:name', newValue);
-      this.saveChanges(this.arrayId, key, newValue[key].value);
-    },
-
-    saveChanges(arrayId, key, field) {
-      console.log(`Изменения в id: ${arrayId}, Название: ${key}, Содержание: ${field}`);
-    },
-  }
-});
-</script>
 
 <style>
 .int {
