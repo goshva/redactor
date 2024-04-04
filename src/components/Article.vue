@@ -14,7 +14,7 @@
                 <li class="arr-item" v-for="(value, key) in JSON.parse(item)" :key="key">
                   <input v-if="JSON.parse(item)" :value="value" class="inp" type="text"
                     @input="updateValue(key, $event.target.value)">
-                  <div :data-tooltip="key" :title="key" class="key key-top">
+                  <div :data-tooltip="key" :title="key" class="key">
                     <button class="btn-save" @click="saveChanges(ArrayId, key,  value)">💾</button>
                   </div>
                 </li>
@@ -214,12 +214,11 @@ ul {
 }
 
 .inp {
-  border: 1px solid #dadada;
+  border: 1px solid lightgreen;
   display: block;
-  height: 52px;
   padding: 10px 30px;
   min-width: 850px;
-  height: 50px;
+  height: 100%;
   border-radius: 20px 0 0 20px;
 }
 
@@ -227,39 +226,19 @@ ul {
   display: none;
 }
 
-
-
 .key {
-  font-size: 20px;
-  font-weight: bold;
   margin: 0;
   display: flex;
   align-items: center;
   justify-content: space-around;
   text-align: center;
-  border: 2px solid #dadada;
-  height: 50px;
-  width: 100%;
+  height: 100%;
+  width: 144px;
   text-wrap: wrap;
   background-color: lightgreen;
   border-radius: 0 20px 20px 0;
 }
 
-.key-top {
-  font-size: 20px;
-  font-weight: bold;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  text-align: center;
-  border: 2px solid #dadada;
-  height: 50px;
-  width: 50%;
-  text-wrap: wrap;
-  background-color: lightgreen;
-  border-radius: 0 20px 20px 0;
-}
 
 .btn-wrapp {
   display: flex;
