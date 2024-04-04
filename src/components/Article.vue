@@ -155,12 +155,12 @@ export default {
 [data-tooltip]::after {
   content: attr(data-tooltip);
   position: absolute;
-  width: 300px;
+  max-width: 300px;
   left: 0;
   top: 0;
   background: lightgreen;
   color: black;
-  padding: 0.5em;
+  padding: 5px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
   pointer-events: none;
   opacity: 0;
@@ -169,7 +169,9 @@ export default {
 
 [data-tooltip]:hover::after {
   opacity: 1;
-  left: 200px;
+  left: 100px;
+  font-weight: bold;
+  font-size: 24px;
 }
 
 ul {

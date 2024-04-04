@@ -86,7 +86,7 @@ export default defineComponent({
 [data-tooltip]::after {
   content: attr(data-tooltip);
   position: absolute;
-  max-width: 300px;
+  width: max-content;
   left: 0;
   top: 0;
   background: lightgreen;
@@ -100,7 +100,7 @@ export default defineComponent({
 
 [data-tooltip]:hover::after {
   opacity: 1;
-  left: 50px;
+  left: 10px;
 }
 
 .block {
