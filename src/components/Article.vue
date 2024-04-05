@@ -249,6 +249,7 @@ ul {
 
 
 .link {
+  display: flex;
   font-size: 30px;
   font-weight: bold;
   border: 2px dashed #fff;
