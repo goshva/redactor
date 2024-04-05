@@ -32,7 +32,7 @@
               <ul class="arr-list">
                 <li class="arr-item">
                   <input class="inp stuff" type="text" :value="item"
-                  @input="updateValue($event, {item})">
+                  @input="updateValue($event, {name})">
                 </li>
 
               </ul>
@@ -40,7 +40,7 @@
 
             <div class="keydn" v-if="key === 'content' || key === 'customContent'"></div>
             <div :data-tooltip="key" :title="key" class="key key-h" v-else>
-              <button class="btn-save" @click="saveChanges(ArrayId, {key}, item)">💾</button>
+              <button class="btn-save" @click="saveChanges(ArrayId, {key}, name)">💾</button>
             </div>
 
           </li>
@@ -272,7 +272,8 @@ ul {
   font-size: 40px;
 }
 .btn-save:focus {
-  outline: unset;
-  font-size: 46px;
+  outline: 4px solid #fff;
+  outline-offset: -4px;
+  border-radius: 12px
 }
 </style>

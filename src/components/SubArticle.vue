@@ -10,8 +10,8 @@
       <input v-else-if="contentArrays.type == 'image'" :value="contentArrays.value" class="inp" type="text" 
         @input="updateValue($event, contentArrays)" cols="108" rows="2"> 
       <div :data-tooltip="name" :title="name" class="key key-top"> 
-        <button v-if="contentArrays.type == 'input'" class="btn-reset btn-savee-input" @click="saveChanges(ArrayId, contentArrays.value, name, contentArrays.type)">💾</button> 
-        <button v-else @click="saveChanges(ArrayId, contentArrays.value, name, contentArrays.type)" class="btn-reset btn-savee-textarea">💾</button> 
+        <button v-if="contentArrays.type == 'input'" class="btn-saves btn-reset btn-savee-input" @click="saveChanges(ArrayId, contentArrays.value, name, contentArrays.type)">💾</button> 
+        <button v-else @click="saveChanges(ArrayId, contentArrays.value, name, contentArrays.type)" class=" btn-saves btn-reset btn-savee-textarea">💾</button> 
       </div> 
     </li> 
   </ul> 
@@ -158,5 +158,11 @@ export default defineComponent({
   text-wrap: wrap;
   background-color: hotpink;
   border-radius: 0 20px 20px 0;
+}
+
+.btn-saves:focus {
+  outline: 4px solid #fff;
+  outline-offset: -4px;
+  border-radius: 12px
 }
 </style>
