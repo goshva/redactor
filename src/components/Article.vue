@@ -32,7 +32,7 @@
               <ul class="arr-list">
                 <li class="arr-item">
                   <input class="inp stuff" type="text" :value="item"
-                  @input="updateValue($event, {value})">
+                  @input="updateValue($event, {item})">
                 </li>
 
               </ul>
@@ -221,7 +221,7 @@ ul {
   height: 100%;
   width: 144px;
   text-wrap: wrap;
-  background-color: rgba(66, 181, 255, 0.85);
+  background-color: dodgerblue;
   border-radius: 0 20px 20px 0;
 }
 
@@ -230,7 +230,7 @@ ul {
 }
 
 .key-content {
-  background-color: rgba(161, 59, 133, 0.85);
+  background-color: hotpink;
 }
 
 

@@ -156,7 +156,7 @@ export default defineComponent({
   height: 100%;
   width: 144px;
   text-wrap: wrap;
-  background-color: rgba(161, 59, 133, 0.85);
+  background-color: hotpink;
   border-radius: 0 20px 20px 0;
 }
 </style>
