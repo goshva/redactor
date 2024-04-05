@@ -40,7 +40,7 @@
 
             <div class="keydn" v-if="key === 'content' || key === 'customContent'"></div>
             <div :data-tooltip="key" :title="key" class="key key-h" v-else>
-              <button class="btn-save" @click="saveChanges(ArrayId, {key}, value)">💾</button>
+              <button class="btn-save" @click="saveChanges(ArrayId, {key}, item)">💾</button>
             </div>
 
           </li>
