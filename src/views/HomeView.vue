@@ -45,7 +45,7 @@ onBeforeUnmount(() => {
 
 <template>
     <div>
-        <a href="/" class="btn btn-primary">На главную</a>
+        <a href="/" class="btn btn-primary mb-4">На главную</a>
         <ul v-if="articles.length" class="mainList" id="observerElement">
             <li v-for="article in articles" :key="article.id">
                 <ArticleEditor :name="article.name" :ArrayId="article.id" :contentArrays="article" />
