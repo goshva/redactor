@@ -64,7 +64,7 @@ export default defineComponent({
   height: 100px;
   padding: 10px 30px;
   border-radius: 20px 0 0 20px;
-  border: 1px solid #00FF00;
+  border: 1px solid rgba(161, 59, 133, 0.85);
 }
 
 .btn-reset {
@@ -87,7 +87,7 @@ export default defineComponent({
   width: max-content;
   left: 0;
   top: 0;
-  background: #00FF00;
+  background: rgba(161, 59, 133, 0.85);
   color: black;
   padding: 5px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
@@ -127,7 +127,7 @@ export default defineComponent({
 
 
 .inp {
-  border: 1px solid #00FF00;
+  border: 1px solid rgba(161, 59, 133, 0.85);
   display: block;
   padding: 10px 30px;
   min-width: 850px;
@@ -136,7 +136,7 @@ export default defineComponent({
 }
 
 .inp-null {
-  border: 1px solid #00FF00;
+  border: 1px solid rgba(161, 59, 133, 0.85);
   display: block;
   height: 52px;
   padding: 10px 30px;
@@ -156,7 +156,7 @@ export default defineComponent({
   height: 100%;
   width: 144px;
   text-wrap: wrap;
-  background-color: #00FF00;
+  background-color: rgba(161, 59, 133, 0.85);
   border-radius: 0 20px 20px 0;
 }
 </style>

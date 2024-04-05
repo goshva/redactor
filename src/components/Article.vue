@@ -136,7 +136,7 @@ export default {
   max-width: 300px;
   left: 0;
   top: 0;
-  background: #00FF7F;
+  background: rgba(66, 181, 255, 0.85);
   color: black;
   padding: 5px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
@@ -175,7 +175,8 @@ ul {
   border: 3px solid gray;
   border-radius: 20px;
   padding: 15px 20px;
-  background-color: #dadada;
+  background: linear-gradient(135deg, rgba(66, 181, 255, 0.85) 0%, rgba(161, 59, 133, 0.85) 100%);
+  color: #fff;
 }
 
 .arr-list {
@@ -194,7 +195,7 @@ ul {
 }
 
 .inp {
-  border: 1px solid #00FF7F;
+  border: 1px solid rgba(66, 181, 255, 0.85);
   display: block;
   padding: 10px 30px;
   min-width: 850px;
@@ -203,7 +204,7 @@ ul {
 }
 
 .inp-content {
-  border: 1px solid #00FF00;
+  border: 1px solid rgba(161, 59, 133, 0.85);
 
 }
 
@@ -220,7 +221,7 @@ ul {
   height: 100%;
   width: 144px;
   text-wrap: wrap;
-  background-color: #00FF7F;
+  background-color: rgba(66, 181, 255, 0.85);
   border-radius: 0 20px 20px 0;
 }
 
@@ -229,8 +230,9 @@ ul {
 }
 
 .key-content {
-  background-color: #00FF00;
+  background-color: rgba(161, 59, 133, 0.85);
 }
+
 
 
 .btn-wrapp {
@@ -245,20 +247,21 @@ ul {
   cursor: pointer;
 }
 
-.stuff {
-
-}
 
 .link {
-  font-size: 24px;
-  border: 2px dashed black;
+  font-size: 30px;
+  font-weight: bold;
+  border: 2px dashed #fff;
+  color: #fff;
   background-color: transparent;
   margin-right: 40px;
 }
 
 .num-block {
   display: inline-block;
-  font-size: 28px;
+  font-size: 32px;
+  color: #fff;
+  font-weight: bold;
   background-color: transparent;
 }
 
@@ -266,5 +269,9 @@ ul {
   background-color: transparent;
   border: unset;
   font-size: 40px;
+}
+.btn-save:focus {
+  outline: unset;
+  font-size: 46px;
 }
 </style>
