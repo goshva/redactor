@@ -11,9 +11,9 @@
               <ul v-if="item" class="arr-list">
 
                 <li class="arr-item" v-for="(value, key) in JSON.parse(item)" :key="key">
-                  <input v-if="JSON.parse(item)" :value="value" class="inp" type="text"
+                  <input v-if="JSON.parse(item)" :value="value" class="inp inp-content" type="text"
                     @input="updateValue($event, {value})">
-                    <div :data-tooltip="key" :title="key" class="key">
+                    <div :data-tooltip="key" :title="key" class="key key-content">
                         <button class="btn-save" @click="saveChanges(ArrayId, {key}, value)">💾</button>
                     </div>
                 </li>
@@ -32,15 +32,15 @@
               <ul class="arr-list">
                 <li class="arr-item">
                   <input class="inp stuff" type="text" :value="item"
-                    @input="updateItem(key, idx, $event.target.value)">
+                  @input="updateValue($event, {value})">
                 </li>
 
               </ul>
             </div>
 
             <div class="keydn" v-if="key === 'content' || key === 'customContent'"></div>
-            <div :data-tooltip="key" :title="key" class="key" v-else>
-              <button class="btn-save" @click="saveChanges(array.id, key, item, subItem)">💾</button>
+            <div :data-tooltip="key" :title="key" class="key key-h" v-else>
+              <button class="btn-save" @click="saveChanges(ArrayId, {key}, value)">💾</button>
             </div>
 
           </li>
@@ -136,7 +136,7 @@ export default {
   max-width: 300px;
   left: 0;
   top: 0;
-  background: lightgreen;
+  background: #00FF7F;
   color: black;
   padding: 5px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
@@ -194,12 +194,17 @@ ul {
 }
 
 .inp {
-  border: 1px solid lightgreen;
+  border: 1px solid #00FF7F;
   display: block;
   padding: 10px 30px;
   min-width: 850px;
   height: 100%;
   border-radius: 20px 0 0 20px;
+}
+
+.inp-content {
+  border: 1px solid #00FF00;
+
 }
 
 .keydn {
@@ -215,8 +220,16 @@ ul {
   height: 100%;
   width: 144px;
   text-wrap: wrap;
-  background-color: lightgreen;
+  background-color: #00FF7F;
   border-radius: 0 20px 20px 0;
+}
+
+.key-h {
+  height: 60%;
+}
+
+.key-content {
+  background-color: #00FF00;
 }
 
 
@@ -233,7 +246,7 @@ ul {
 }
 
 .stuff {
-  box-shadow: 1px 1px 0px 0px;
+
 }
 
 .link {
