@@ -1,15 +1,3 @@
-<template>
-  <div>
-    <input v-model="searchQuery" type="search" class="form-control" placeholder="Поиск...">
-    <button class="btn btn-primary" @click="searchArticles"> Искать </button>
-    <ul>
-      <li v-for="article in articles" :key="article.id">
-        <ArticleEditor :name="article.name" :ArrayId="article.id" :contentArrays="article" :searchQuery="searchQuery" @searchArticles="searchArticles" />
-      </li>
-    </ul>
-  </div>
-</template>
-
 <script setup>
 import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
 import ArticleEditor from '@/components/Article.vue';
@@ -70,8 +58,25 @@ const searchArticles = () => {
 };
 </script>
 
+<template>
+  <div>
+    <div class="flex mb-4">
+      <input v-model="searchQuery" type="search" class="form-control" placeholder="Поиск...">
+      <button class="btn btn-primary" @click="searchArticles"> Искать </button>
+    </div>
+    <ul>
+      <li v-for="article in articles" :key="article.id">
+        <ArticleEditor :name="article.name" :ArrayId="article.id" :contentArrays="article" :searchQuery="searchQuery" @searchArticles="searchArticles" />
+      </li>
+    </ul>
+  </div>
+</template>
 
 <style>
+ul {
+  list-style-type: none;
+
+}
 .mainList li {
     list-style-type: none;
 }

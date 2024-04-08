@@ -1,20 +1,24 @@
 <template>
-  <div class="container">
+  <div class="container" v-if="showContainer">
     <ul class="list-container">
       <li class="one-arr">
         <button class="link" @click="switchTo(generateUrl( contentArrays.url))">{{ generateUrl( contentArrays.url) }}</button>
         <p class="num-block"> {{ name }} / {{ ArrayId }}</p>
         <ul class="arr-list">
           <li class="arr-item" v-for="(item, key, idx) in filteredContentArrays" :key="key">
+
             <div v-if="key === 'content'">
               <ul v-if="item[1]" class="arr-list">
                 <li class="arr-item" v-for="(value, key) in JSON.parse(item[1])" :key="key">
                   <input class="inp inp-content" type="text" :value="value"
                     @input="updateValue($event, {value})">
-                  <button class="btn-save" @click="saveChanges(ArrayId, {key}, value)">💾</button>
+                    <div :data-tooltip="key" :title="key" class="key key-content">
+                        <button class="btn-save" @click="saveChanges(ArrayId, {key}, value)">💾</button>
+                    </div>
                 </li>
               </ul>
             </div>
+
             <div v-else-if="key === 'customContent' &&!!item[1]">
               <ul class="arr-list">
                 <li v-for="(value, key) in JSON.parse(item[1])" :key="key" class="arr-item">
@@ -22,6 +26,7 @@
                 </li>
               </ul>
             </div>
+
             <div v-else>
               <ul class="arr-list">
                 <li class="arr-item">
@@ -30,7 +35,11 @@
                 </li>
               </ul>
             </div>
-            <button class="btn-save" @click="saveChanges(ArrayId, {key}, name)">💾</button>
+
+            <div :data-tooltip="name" :title="key" class="key key-h">
+              <button class="btn-save" @click="saveChanges(ArrayId, {key}, name)">💾</button>
+            </div>
+
           </li>
         </ul>
         <ButtonShow />
@@ -40,7 +49,7 @@
 </template>
 
 <script>
-import { ref, watch } from 'vue';
+import { ref, watch, computed } from 'vue';
 import SubArticle from './SubArticle.vue';
 import ButtonShow from './ButtonShow.vue';
 
@@ -71,6 +80,17 @@ export default {
   },
   setup(props) {
     const filteredContentArrays = ref(Object.entries(props.contentArrays));
+    const showContainer = computed(() => {
+      if (!props.searchQuery) {
+        return true;
+      }
+      return filteredContentArrays.value.some(([key, value]) => {
+        if (value && value.toString().toLowerCase().includes(props.searchQuery.toLowerCase())) {
+          return true;
+        }
+        return false;
+      });
+    });
 
     watch(() => props.searchQuery, (newQuery) => {
       if (!newQuery) {
@@ -118,7 +138,8 @@ export default {
       generateNumberBlock,
       saveChanges,
       updateValue,
-      filteredContentArrays
+      filteredContentArrays,
+      showContainer
     };
   }
 };
