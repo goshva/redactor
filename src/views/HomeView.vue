@@ -1,6 +1,17 @@
+<template>
+  <div>
+    <input v-model="searchQuery" type="search" class="form-control" placeholder="Поиск...">
+    <button class="btn btn-primary" @click="searchArticles"> Искать </button>
+    <ul>
+      <li v-for="article in articles" :key="article.id">
+        <ArticleEditor :name="article.name" :ArrayId="article.id" :contentArrays="article" :searchQuery="searchQuery" @searchArticles="searchArticles" />
+      </li>
+    </ul>
+  </div>
+</template>
+
 <script setup>
 import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
-
 import ArticleEditor from '@/components/Article.vue';
 import { storeToRefs } from 'pinia';
 import { useAuthStore, useArticlesStore } from '@/stores';
@@ -58,24 +69,6 @@ const searchArticles = () => {
   }
 };
 </script>
-
-<template>
-  <div>
-      <a href="/" class="btn btn-primary mb-4">На главную</a>
-      <div class="flex mb-4">
-          <input v-model="searchQuery" type="search" class="form-control" placeholder="Поиск...">
-          <button class="btn btn-primary" @click="searchArticles"> Искать </button>
-      </div>
-
-      <ul v-if="articles.length" class="mainList" id="observerElement">
-          <li v-for="article in articles" :key="article.id">
-              <ArticleEditor :name="article.name" :ArrayId="article.id" :contentArrays="article" :searchQuery="searchQuery" @searchArticles="searchArticles" />
-          </li>
-      </ul>
-      <div v-if="articles.loading" class="spinner-border spinner-border-sm"></div>
-      <div v-if="articles.error" class="text-danger">Error loading articles: {{ articles.error }}</div>
-  </div>
-</template>
 
 
 <style>

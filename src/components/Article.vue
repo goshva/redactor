@@ -5,44 +5,32 @@
         <button class="link" @click="switchTo(generateUrl( contentArrays.url))">{{ generateUrl( contentArrays.url) }}</button>
         <p class="num-block"> {{ name }} / {{ ArrayId }}</p>
         <ul class="arr-list">
-
-          <li class="arr-item" v-for="(item, key, idx) in contentArrays" :key="key">
+          <li class="arr-item" v-for="(item, key, idx) in filteredContentArrays" :key="key">
             <div v-if="key === 'content'">
               <ul v-if="item" class="arr-list">
-
                 <li class="arr-item" v-for="(value, key) in JSON.parse(item)" :key="key">
-                  <input v-if="JSON.parse(item)" :value="value" class="inp inp-content" type="text"
+                  <input class="inp inp-content" type="text" :value="value"
                     @input="updateValue($event, {value})">
-                    <div :data-tooltip="key" :title="key" class="key key-content">
-                        <button class="btn-save" @click="saveChanges(ArrayId, {key}, value)">💾</button>
-                    </div>
+                  <button class="btn-save" @click="saveChanges(ArrayId, {key}, value)">💾</button>
                 </li>
-
               </ul>
             </div>
             <div v-else-if="key === 'customContent' &&!!item">
               <ul class="arr-list">
                 <li v-for="(value, key) in JSON.parse(item)" :key="key" class="arr-item">
-                <SubArticle :name="key" :ArrayId="ArrayId" :contentArrays="value" /> 
+                  <SubArticle :name="key" :ArrayId="ArrayId" :contentArrays="value" />
                 </li>
               </ul>
             </div>
-            
             <div v-else>
               <ul class="arr-list">
                 <li class="arr-item">
                   <input class="inp stuff" type="text" :value="item"
                   @input="updateValue($event, {name})">
                 </li>
-
               </ul>
             </div>
-
-            <div class="keydn" v-if="key === 'content' || key === 'customContent'"></div>
-            <div :data-tooltip="key" :title="key" class="key key-h" v-else>
-              <button class="btn-save" @click="saveChanges(ArrayId, {key}, name)">💾</button>
-            </div>
-
+            <button class="btn-save" @click="saveChanges(ArrayId, {key}, name)">💾</button>
           </li>
         </ul>
         <ButtonShow />
@@ -52,7 +40,7 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import SubArticle from './SubArticle.vue';
 import ButtonShow from './ButtonShow.vue';
 
@@ -75,21 +63,38 @@ export default {
     contentArrays: {
       type: Object,
       required: true
+    },
+    searchQuery: {
+      type: String,
+      required: true
     }
   },
-  setup() {
+  setup(props) {
+    const filteredContentArrays = ref(Object.entries(props.contentArrays));
 
-    const updateValue = (event, name, value) => {
+    watch(() => props.searchQuery, (newQuery) => {
+      if (!newQuery) {
+        filteredContentArrays.value = Object.entries(props.contentArrays);
+        return;
+      }
+      filteredContentArrays.value = Object.entries(props.contentArrays).filter(([key, value]) => {
+        if (value && value.toString().toLowerCase().includes(newQuery.toLowerCase())) {
+          return true;
+        }
+        return false;
+      });
+    });
+
+    const updateValue = (event, name) => {
       name.value = event.target.value;
-        console.log(name.value);
     };
 
-    const saveChanges = (arrayId, name, value) => { 
-        console.log(`Изменения в id: ${arrayId}, Название: ${name.key}, Содержание: ${value}`); 
+    const saveChanges = (arrayId, name, value) => {
+      console.log(`Изменения в id: ${arrayId}, Название: ${name.key}, Содержание: ${value}`);
     };
 
     const generateNumberBlock = (index) => {
-      const numberBlock = contentArrays.value[index]['id']
+      const numberBlock = props.contentArrays[index]['id']
       return numberBlock
     }
 
@@ -113,6 +118,7 @@ export default {
       generateNumberBlock,
       saveChanges,
       updateValue,
+      filteredContentArrays
     };
   }
 };
