@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
 
 import ArticleEditor from '@/components/Article.vue';
 import { storeToRefs } from 'pinia';
@@ -11,23 +11,16 @@ const { user: authUser } = storeToRefs(authStore);
 const articlesStore = useArticlesStore();
 const { articles, articlesList } = storeToRefs(articlesStore);
 
+const searchQuery = ref('');
+const isFetching = ref(false);
+const filteredArticles = ref([]);
 
-/*
-const fetchData = async () => {
-    isFetching.value = true;
-    const response = await fetch('https://tender.one/api/?id=' + currentPage.value);
-
-    const result = await response.json();
-    //articles.append(result);// = [...data.value, ...result];
-    articlesStore.appendNewArticles(result);
-    isFetching.value = false;
-    currentPage.value++;
-};
-*/
 const handleScroll = () => {
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-        articlesStore.appendNewArticle();
-
+        isFetching.value = true;
+        articlesStore.appendNewArticle().then(() => {
+            isFetching.value = false;
+        });
     }
 };
 
@@ -41,22 +34,55 @@ onMounted(() => {
 onBeforeUnmount(() => {
     window.removeEventListener('scroll', handleScroll);
 });
+
+watch(searchQuery, () => {
+  if (searchQuery.value.length > 2) {
+    searchArticles();
+  }
+});
+
+const searchArticles = () => {
+  if (searchQuery.value) {
+    filteredArticles.value = articles.value.filter(article => {
+      let match = false;
+      for (const [key, value] of Object.entries(article)) {
+        if (value && value.toString().toLowerCase().includes(searchQuery.value.toLowerCase())) {
+          match = true;
+          break;
+        }
+      }
+      return match;
+    });
+  } else {
+    filteredArticles.value = articles.value;
+  }
+};
 </script>
 
 <template>
-    <div>
-        <a href="/" class="btn btn-primary mb-4">На главную</a>
-        <ul v-if="articles.length" class="mainList" id="observerElement">
-            <li v-for="article in articles" :key="article.id">
-                <ArticleEditor :name="article.name" :ArrayId="article.id" :contentArrays="article" />
-            </li>
-        </ul>
-        <div v-if="articles.loading" class="spinner-border spinner-border-sm"></div>
-        <div v-if="articles.error" class="text-danger">Error loading articles: {{ articles.error }}</div>
-    </div>
+  <div>
+      <a href="/" class="btn btn-primary mb-4">На главную</a>
+      <div class="flex mb-4">
+          <input v-model="searchQuery" type="search" class="form-control" placeholder="Поиск...">
+          <button class="btn btn-primary" @click="searchArticles"> Искать </button>
+      </div>
+
+      <ul v-if="articles.length" class="mainList" id="observerElement">
+          <li v-for="article in articles" :key="article.id">
+              <ArticleEditor :name="article.name" :ArrayId="article.id" :contentArrays="article" :searchQuery="searchQuery" @searchArticles="searchArticles" />
+          </li>
+      </ul>
+      <div v-if="articles.loading" class="spinner-border spinner-border-sm"></div>
+      <div v-if="articles.error" class="text-danger">Error loading articles: {{ articles.error }}</div>
+  </div>
 </template>
+
+
 <style>
 .mainList li {
     list-style-type: none;
+}
+.flex {
+  display: flex;
 }
 </style>
