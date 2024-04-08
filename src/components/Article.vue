@@ -4,7 +4,7 @@
       <li class="one-arr">
         <button class="link" @click="switchTo(generateUrl( contentArrays.url))">{{ generateUrl( contentArrays.url) }}</button>
         <p class="num-block"> {{ name }} / {{ ArrayId }}</p>
-        <ul class="arr-list" v-show="showContentKeys">
+        <ul class="arr-list">
 
           <li class="arr-item" v-for="(item, key, idx) in contentArrays" :key="key">
             <div v-if="key === 'content'">
@@ -45,7 +45,7 @@
 
           </li>
         </ul>
-        <ButtonShow @click="toggleShow" />
+        <ButtonShow />
       </li>
     </ul>
   </div>
@@ -78,11 +78,6 @@ export default {
     }
   },
   setup() {
-    const showContentKeys = ref(false);
-
-    const toggleShow = () => {
-      showContentKeys.value =!showContentKeys.value;
-    };
 
     const updateValue = (event, name, value) => {
       name.value = event.target.value;
@@ -118,8 +113,6 @@ export default {
       generateNumberBlock,
       saveChanges,
       updateValue,
-      toggleShow,
-      showContentKeys
     };
   }
 };
