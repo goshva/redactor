@@ -7,17 +7,17 @@
         <ul class="arr-list">
           <li class="arr-item" v-for="(item, key, idx) in filteredContentArrays" :key="key">
             <div v-if="key === 'content'">
-              <ul v-if="item" class="arr-list">
-                <li class="arr-item" v-for="(value, key) in JSON.parse(item)" :key="key">
+              <ul v-if="item[1]" class="arr-list">
+                <li class="arr-item" v-for="(value, key) in JSON.parse(item[1])" :key="key">
                   <input class="inp inp-content" type="text" :value="value"
                     @input="updateValue($event, {value})">
                   <button class="btn-save" @click="saveChanges(ArrayId, {key}, value)">💾</button>
                 </li>
               </ul>
             </div>
-            <div v-else-if="key === 'customContent' &&!!item">
+            <div v-else-if="key === 'customContent' &&!!item[1]">
               <ul class="arr-list">
-                <li v-for="(value, key) in JSON.parse(item)" :key="key" class="arr-item">
+                <li v-for="(value, key) in JSON.parse(item[1])" :key="key" class="arr-item">
                   <SubArticle :name="key" :ArrayId="ArrayId" :contentArrays="value" />
                 </li>
               </ul>
@@ -25,7 +25,7 @@
             <div v-else>
               <ul class="arr-list">
                 <li class="arr-item">
-                  <input class="inp stuff" type="text" :value="item"
+                  <input class="inp stuff" type="text" :value="item[1]"
                   @input="updateValue($event, {name})">
                 </li>
               </ul>
