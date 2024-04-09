@@ -24,11 +24,12 @@
               <ul class="arr-list">
                 <li v-for="(value, key) in JSON.parse(item)" :key="key" class="arr-item">
                   <SubArticle
-    :name="key"
-    :ArrayId="ArrayId"
-    :contentArrays="value"
-    :showContentKeys="showContentKeys"
-    :searchQuery="searchQuery"/>
+                    :name="key"
+                    :ArrayId="ArrayId"
+                    :contentArrays="value"
+                    :showContentKeys="showContentKeys"
+                    :searchQuery="searchQuery"
+                  />
                 </li>
               </ul>
             </div>
@@ -49,10 +50,10 @@
           </li>
         </ul>
         <ButtonShow
-  :key="index"
-  :contentArrays="contentArrays"
-  @click="toggleShow"
-/>
+          :key="index"
+          :contentArrays="contentArrays"
+          @click="toggleShow"
+        />
       </li>
     </ul>
   </div>
@@ -77,6 +78,10 @@ export default {
     ArrayId: {
       type: Number,
       required: true
+    },
+    index: {
+      type: Number,
+      required: false,
     },
     //contentArrays
     contentArrays: {
@@ -145,7 +150,6 @@ export default {
       if (!newQuery) {
         return;
       }
-      // Filtering data is not required, since we display the entire object contentArrays
     });
 
     const updateValue = (event, name) => {
