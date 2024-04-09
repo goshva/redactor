@@ -58,24 +58,6 @@ const searchArticles = () => {
 };
 </script>
 
-<template>
-  <div>
-    <div class="flex mb-4">
-      <a href="/" class="btn btn-primary mb-4">На главную</a>
-      <router-link to="/news" class="btn btn-success mb-4 ml-2">Создать новость</router-link>
-    </div>
-    <div class="flex mb-4">
-      <input v-model="searchQuery" type="search" class="form-control" placeholder="Поиск...">
-      <button class="btn btn-primary" @click="searchArticles"> Искать </button>
-    </div>
-    <ul>
-      <li v-for="article in articles" :key="article.id">
-        <ArticleEditor :name="article.name" :ArrayId="article.id" :contentArrays="article" :searchQuery="searchQuery" @searchArticles="searchArticles" />
-      </li>
-    </ul>
-  </div>
-</template>
-
 <style>
 ul {
   list-style-type: none;
