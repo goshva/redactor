@@ -5,6 +5,8 @@
         @input="updateValue($event, contentArrays)"> 
       <textarea v-else-if="contentArrays.type == 'textarea'" :value="contentArrays.value" class="int" type="text" 
         @input="updateValue($event, contentArrays)" cols="108" rows="2"></textarea> 
+      <textarea v-else-if="contentArrays.type == 'editor'" :value="contentArrays.value" class="int" type="text" 
+        @input="updateValue($event, contentArrays)" cols="108" rows="2"></textarea> 
       <input v-else-if="contentArrays.type == 'link'" :value="contentArrays.value" class="inp" type="text" 
         @input="updateValue($event, contentArrays)" cols="108" rows="2"> 
       <input v-else-if="contentArrays.type == 'image'" :value="contentArrays.value" class="inp" type="text" 

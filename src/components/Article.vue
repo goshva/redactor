@@ -5,13 +5,13 @@
         <button class="link" @click="switchTo(generateUrl( contentArrays.url))">{{ generateUrl( contentArrays.url) }}</button>
         <p class="num-block"> {{ name }} / {{ ArrayId }}</p>
         <ul class="arr-list">
-          <li class="arr-item" v-for="(item, key, idx) in filteredContentArrays" :key="key">
+          <li class="arr-item" v-for="(item, key, idx) in contentArrays" :key="key">
 
             <div v-if="key === 'content'">
-              <ul v-if="item[1]" class="arr-list">
-                <li class="arr-item" v-for="(value, key) in JSON.parse(item[1])" :key="key">
-                  <input class="inp inp-content" type="text" :value="value"
-                    @input="updateValue($event, {value})">
+              <ul v-if="item" class="arr-list">
+                <li class="arr-item arr-item-one" v-for="(value, key) in JSON.parse(item)" :key="key">
+                  <textarea class="inp inp-content" type="text" :value="value"
+                    @input="updateValue($event, {key})"></textarea>
                     <div :data-tooltip="key" :title="key" class="key key-content">
                         <button class="btn-save" @click="saveChanges(ArrayId, {key}, value)">💾</button>
                     </div>
@@ -19,9 +19,9 @@
               </ul>
             </div>
 
-            <div v-else-if="key === 'customContent' &&!!item[1]">
+            <div v-else-if="key === 'customContent' &&!!item">
               <ul class="arr-list">
-                <li v-for="(value, key) in JSON.parse(item[1])" :key="key" class="arr-item">
+                <li v-for="(value, key) in JSON.parse(item)" :key="key" class="arr-item">
                   <SubArticle :name="key" :ArrayId="ArrayId" :contentArrays="value" />
                 </li>
               </ul>
@@ -29,17 +29,17 @@
 
             <div v-else>
               <ul class="arr-list">
-                <li class="arr-item">
-                  <input class="inp stuff" type="text" :value="item[1]"
+                <li class="arr-item arr-item-one">
+                  <input class="inp stuff" type="text" :value="item"
                   @input="updateValue($event, {name})">
+                  
+                  <div :data-tooltip="name" :title="key" class="key key-h">
+                    <button class="btn-save" @click="saveChanges(ArrayId, {key}, name)">💾</button>
+                  </div>
                 </li>
               </ul>
-            </div>
-
-            <div :data-tooltip="name" :title="key" class="key key-h">
-              <button class="btn-save" @click="saveChanges(ArrayId, {key}, name)">💾</button>
-            </div>
-
+                </div>
+                
           </li>
         </ul>
         <ButtonShow />
@@ -79,13 +79,15 @@ export default {
     }
   },
   setup(props) {
-    const filteredContentArrays = ref(Object.entries(props.contentArrays));
     const showContainer = computed(() => {
       if (!props.searchQuery) {
         return true;
       }
-      return filteredContentArrays.value.some(([key, value]) => {
-        if (value && value.toString().toLowerCase().includes(props.searchQuery.toLowerCase())) {
+      return Object.values(props.contentArrays).some(value => {
+        if (value && typeof value === 'string' && value.toString().toLowerCase().includes(props.searchQuery.toLowerCase())) {
+          return true;
+        }
+        if (value && typeof value === 'object' && JSON.stringify(value).toLowerCase().includes(props.searchQuery.toLowerCase())) {
           return true;
         }
         return false;
@@ -94,15 +96,9 @@ export default {
 
     watch(() => props.searchQuery, (newQuery) => {
       if (!newQuery) {
-        filteredContentArrays.value = Object.entries(props.contentArrays);
         return;
       }
-      filteredContentArrays.value = Object.entries(props.contentArrays).filter(([key, value]) => {
-        if (value && value.toString().toLowerCase().includes(newQuery.toLowerCase())) {
-          return true;
-        }
-        return false;
-      });
+      // Filtering data is not required, since we display the entire object contentArrays
     });
 
     const updateValue = (event, name) => {
@@ -138,7 +134,7 @@ export default {
       generateNumberBlock,
       saveChanges,
       updateValue,
-      filteredContentArrays,
+
       showContainer
     };
   }
@@ -214,6 +210,10 @@ ul {
   width: 100%;
 }
 
+.arr-item-one {
+  height: 50px;
+}
+
 .inp {
   border: 1px solid rgba(66, 181, 255, 0.85);
   display: block;
@@ -246,7 +246,7 @@ ul {
 }
 
 .key-h {
-  height: 60%;
+  height: 100%;
 }
 
 .key-content {
