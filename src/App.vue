@@ -1,18 +1,15 @@
 <script setup>
-import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
-import ArticleEditor from '@/components/Article.vue';
-import { storeToRefs } from 'pinia';
-import { useAuthStore, useArticlesStore } from '@/stores';
+import { ref, watch } from 'vue';
+import { RouterLink, RouterView } from 'vue-router';
+
+import { useAuthStore } from '@/stores';
 
 const authStore = useAuthStore();
-const { user: authUser } = storeToRefs(authStore);
-
-const articlesStore = useArticlesStore();
-const { articles, articlesList } = storeToRefs(articlesStore);
 
 const searchQuery = ref('');
 const isFetching = ref(false);
 const filteredArticles = ref([]);
+const articles = ref([]); // Define the articles variable here
 
 const handleScroll = () => {
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
@@ -22,17 +19,6 @@ const handleScroll = () => {
         });
     }
 };
-
-onMounted(() => {
-    articlesStore.getAllList().then(() => {
-        articlesStore.appendNewArticle();
-    })
-    window.addEventListener('scroll', handleScroll);
-});
-
-onBeforeUnmount(() => {
-    window.removeEventListener('scroll', handleScroll);
-});
 
 watch(searchQuery, () => {
   if (searchQuery.value.length > 2) {
@@ -59,7 +45,7 @@ const searchArticles = () => {
 </script>
 
 <template>
-  <div class="app-container bg-light">
+    <div class="app-container bg-light">
       <nav v-show="authStore.user" class="navbar navbar-expand navbar-dark bg-dark">
           <div class="navbar-nav d-flex align-items-center ml-auto">
               <router-link to="/" class="nav-item nav-link d-flex align-items-center" style="font-size: 24px;">
@@ -75,24 +61,12 @@ const searchArticles = () => {
               <a @click="authStore.logout()" class="nav-item nav-link" style="font-size: 24px;">🚪</a>
           </div>
       </nav>
-      <div class="container pt-4 pb-4">
-          <ul>
-              <li v-for="article in articles" :key="article.id">
-                  <ArticleEditor :name="article.name" :ArrayId="article.id" :contentArrays="article" :searchQuery="searchQuery" @searchArticles="searchArticles" />
-              </li>
-          </ul>
-      </div>
-  </div>
+        <div class="container pt-4 pb-4">
+            <RouterView />
+        </div>
+    </div>
 </template>
 
 <style>
 @import '@/assets/base.css';
-
-ul {
-  list-style-type: none;
-}
-
-.flex {
-  display: flex;
-}
 </style>

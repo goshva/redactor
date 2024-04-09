@@ -1,5 +1,5 @@
 <template>
-  <a href="/" class="btn btn-primary mb-4">На главную</a>
+
   <ul class="arr-list"> 
     <li class="arr-item">
         <input type="text" class="inp" placeholder="id">
