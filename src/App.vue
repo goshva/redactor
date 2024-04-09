@@ -59,31 +59,29 @@ const searchArticles = () => {
 </script>
 
 <template>
-    <div class="app-container bg-light">
-        <nav v-show="authStore.user" class="navbar navbar-expand navbar-dark bg-dark">
-            <div class="navbar-nav">
-                <RouterLink to="/" class="nav-item nav-link">Home</RouterLink>
-                <a @click="authStore.logout()" class="nav-item nav-link">Logout</a>
-                <RouterLink to="/" class="btn btn-primary mb-4">На главную</RouterLink>
-                <router-link to="/news" class="btn btn-success mb-4 ml-2">Создать новость</router-link>
-                <div class="flex mb-4">
-                    <div class="search-container">
-                        <input v-model="searchQuery" type="search" class="form-control with-icon" placeholder="Поиск...">
-                        <span class="search-icon">🔍</span>
-                    </div>
-                </div>
-            </div>
-        </nav>
-        <div class="container pt-4 pb-4">
-            <ul>
-                <li v-for="article in articles" :key="article.id">
-                    <ArticleEditor :name="article.name" :ArrayId="article.id" :contentArrays="article" :searchQuery="searchQuery" @searchArticles="searchArticles" />
-                </li>
-            </ul>
-        </div>
-    </div>
+  <div class="app-container bg-light">
+      <nav v-show="authStore.user" class="navbar navbar-expand navbar-dark bg-dark">
+          <div class="navbar-nav">
+              <router-link to="/" class="nav-item nav-link" style="font-size: 24px;">🏠</router-link>
+              <a @click="authStore.logout()" class="nav-item nav-link" style="font-size: 24px;">🚪</a>
+              <router-link to="/news" class="btn btn-success mb-4 ml-2">Создать новость</router-link>
+              <div class="flex mb-4">
+                  <div class="search-container">
+                      <input v-model="searchQuery" type="search" class="form-control with-icon" placeholder="Поиск...">
+                      <span class="search-icon">🔍</span>
+                  </div>
+              </div>
+          </div>
+      </nav>
+      <div class="container pt-4 pb-4">
+          <ul>
+              <li v-for="article in articles" :key="article.id">
+                  <ArticleEditor :name="article.name" :ArrayId="article.id" :contentArrays="article" :searchQuery="searchQuery" @searchArticles="searchArticles" />
+              </li>
+          </ul>
+      </div>
+  </div>
 </template>
-
 
 
 <style>
