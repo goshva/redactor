@@ -5,7 +5,8 @@
         <button class="link" @click="switchTo(generateUrl( contentArrays.url))">{{ generateUrl( contentArrays.url) }}</button>
         <p class="num-block"> {{ name }} / {{ ArrayId }}</p>
         <ul class="arr-list">
-          <li class="arr-item" v-for="(item, key, idx) in contentArrays" :key="key">
+          <li class="arr-item" v-for="(item, key, idx) in contentArrays" :key="key"
+          :style="{ display: showContentKeys[key] ? 'flex' : 'none' }">
 
             <div v-if="key === 'content'">
               <ul v-if="item" class="arr-list">
@@ -22,7 +23,12 @@
             <div v-else-if="key === 'customContent' &&!!item">
               <ul class="arr-list">
                 <li v-for="(value, key) in JSON.parse(item)" :key="key" class="arr-item">
-                  <SubArticle :name="key" :ArrayId="ArrayId" :contentArrays="value" />
+                  <SubArticle
+    :name="key"
+    :ArrayId="ArrayId"
+    :contentArrays="value"
+    :showContentKeys="showContentKeys"
+    :searchQuery="searchQuery"/>
                 </li>
               </ul>
             </div>
@@ -42,7 +48,11 @@
                 
           </li>
         </ul>
-        <ButtonShow />
+        <ButtonShow
+  :key="index"
+  :contentArrays="contentArrays"
+  @click="toggleShow"
+/>
       </li>
     </ul>
   </div>
@@ -79,15 +89,52 @@ export default {
     }
   },
   setup(props) {
+    const showContentKeys = computed(() => {
+      if (!props.searchQuery) {
+        return {};
+      }
+      const matchingKeys = Object.keys(props.contentArrays).filter(key => {
+        if (typeof props.contentArrays[key] === 'string') {
+          return props.contentArrays[key].toLowerCase().includes(props.searchQuery.toLowerCase());
+        } else if (typeof props.contentArrays[key] === 'object') {
+          return JSON.stringify(props.contentArrays[key]).toLowerCase().includes(props.searchQuery.toLowerCase());
+        }
+        return false;
+      });
+      const result = {};
+      matchingKeys.forEach(key => {
+        result[key] = true;
+      });
+      return result;
+    });
+
+    const toggleShow = (index, id) => {
+      console.log(index);
+
+      showContentKeys.value =!showContentKeys.value;
+      if (props.contentArrays[index]) {
+        props.contentArrays[index] = props.contentArrays[index].map((it, key) => {
+          if (key!== "content" && key!== "customContent") {
+            console.log(showContentKeys.value);
+            return {
+             ...it,
+              show: showContentKeys.value[key],
+            };
+          }
+          return it;
+        });
+      }
+    };
+
     const showContainer = computed(() => {
       if (!props.searchQuery) {
         return true;
       }
-      return Object.values(props.contentArrays).some(value => {
-        if (value && typeof value === 'string' && value.toString().toLowerCase().includes(props.searchQuery.toLowerCase())) {
+      return Object.values(props.contentArrays).some((value) => {
+        if (value && typeof value === "string" && value.toString().toLowerCase().includes(props.searchQuery.toLowerCase())) {
           return true;
         }
-        if (value && typeof value === 'object' && JSON.stringify(value).toLowerCase().includes(props.searchQuery.toLowerCase())) {
+        if (value && typeof value === "object" && JSON.stringify(value).toLowerCase().includes(props.searchQuery.toLowerCase())) {
           return true;
         }
         return false;
@@ -134,7 +181,8 @@ export default {
       generateNumberBlock,
       saveChanges,
       updateValue,
-
+      showContentKeys,
+      toggleShow,
       showContainer
     };
   }
