@@ -1,18 +1,20 @@
+
 <template>
   <div class="container" v-if="showContainer">
     <ul class="list-container">
       <li class="one-arr">
         <button class="link" @click="switchTo(generateUrl( contentArrays.url))">{{ generateUrl( contentArrays.url) }}</button>
         <p class="num-block"> {{ name }} / {{ ArrayId }}</p>
+        
         <ul class="arr-list">
-          <li class="arr-item" v-for="(item, key, idx) in contentArrays" :key="key"
-          :style="{ display: showContentKeys[key]? 'flex' : 'none' }">
+          
+          <li class="arr-item" v-for="(item, key, idx) in contentArrays" :key="key">
 
             <div v-if="key === 'content'">
               <ul v-if="item" class="arr-list">
                 <li class="arr-item arr-item-one" v-for="(value, key) in JSON.parse(item)" :key="key">
                   <textarea class="inp inp-content" type="text" :value="value"
-                    @input="updateValue($event, {key})"></textarea>
+                    @input="updateValue($event, {key})" :class="{ highlight: showHighlight(key) }"></textarea>
                     <div :data-tooltip="key" :title="key" class="key key-content">
                         <button class="btn-save" @click="saveChanges(ArrayId, {key}, value)">💾</button>
                     </div>
@@ -23,13 +25,7 @@
             <div v-else-if="key === 'customContent' &&!!item">
               <ul class="arr-list">
                 <li v-for="(value, key) in JSON.parse(item)" :key="key" class="arr-item">
-                  <SubArticle
-                    :name="key"
-                    :ArrayId="ArrayId"
-                    :contentArrays="value"
-                    :showContentKeys="showContentKeys"
-                    :searchQuery="searchQuery"
-                  />
+                  <SubArticle :name="key" :ArrayId="ArrayId" :contentArrays="value" />
                 </li>
               </ul>
             </div>
@@ -37,30 +33,24 @@
             <div v-else>
               <ul class="arr-list">
                 <li class="arr-item arr-item-one">
-                  <input class="inp stuff" type="text" :value="item"
-                  @input="updateValue($event, {name})">
-
-                  <div :data-tooltip="name" :title="key" class="key key-h">
-                    <button class="btn-save" @click="saveChanges(ArrayId, {key}, name)">💾</button>
+                  <input class="inp stuff" type="text" :value="item" @input="updateValue($event, key, item)" :class="{ highlight: showHighlight(name) }">
+                  <div :data-tooltip="key" class="key key-h" v-if="name">
+                    <button class="btn-save" @click="saveChanges(ArrayId, {key}, item)">💾</button>
                   </div>
                 </li>
               </ul>
                 </div>
-
+                
           </li>
         </ul>
-        <ButtonShow
-          :key="index"
-          :contentArrays="contentArrays"
-          @click="toggleShow"
-        />
+        <ButtonShow />
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-import { ref, watch, computed } from 'vue';
+import { ref, computed } from 'vue';
 import SubArticle from './SubArticle.vue';
 import ButtonShow from './ButtonShow.vue';
 
@@ -79,10 +69,6 @@ export default {
       type: Number,
       required: true
     },
-    index: {
-      type: Number,
-      required: false,
-    },
     //contentArrays
     contentArrays: {
       type: Object,
@@ -94,44 +80,19 @@ export default {
     }
   },
   setup(props) {
-    const showContentKeys = ref(false);
-
-    const toggleShow = (index, id) => {
-      const newShowContentKeys = {};
-      Object.keys(props.contentArrays).forEach((key) => {
-        newShowContentKeys[key] = true;
-      });
-      showContentKeys.value = newShowContentKeys;
-
-      if (props.contentArrays[index]) {
-        props.contentArrays[index] = props.contentArrays[index].map((it) => {
-          return {
-          ...it,
-            show: true,
-          };
-        });
-      }
-    };
-
     const showContainer = computed(() => {
       if (!props.searchQuery) {
         return true;
       }
-      return Object.values(props.contentArrays).some((value) => {
-        if (value && typeof value === "string" && value.toString().toLowerCase().includes(props.searchQuery.toLowerCase())) {
+      return Object.values(props.contentArrays).some(value => {
+        if (value && typeof value === 'string' && value.toString().toLowerCase().includes(props.searchQuery.toLowerCase())) {
           return true;
         }
-        if (value && typeof value === "object" && JSON.stringify(value).toLowerCase().includes(props.searchQuery.toLowerCase())) {
+        if (value && typeof value === 'object' && JSON.stringify(value).toLowerCase().includes(props.searchQuery.toLowerCase())) {
           return true;
         }
         return false;
       });
-    });
-
-    watch(() => props.searchQuery, (newQuery) => {
-      if (!newQuery) {
-        return;
-      }
     });
 
     const updateValue = (event, name) => {
@@ -161,14 +122,20 @@ export default {
       window.location = url
     }
 
+    const showHighlight = (value) => {
+      if (!props.searchQuery) {
+        return false;
+      }
+      return value.toString().toLowerCase().includes(props.searchQuery.toLowerCase());
+    };
+
     return {
       generateUrl,
       switchTo,
       generateNumberBlock,
       saveChanges,
       updateValue,
-      showContentKeys,
-      toggleShow,
+      showHighlight,
       showContainer
     };
   }
@@ -207,7 +174,6 @@ ul {
   margin: 0;
 }
 
-
 .container {
   max-width: 1920px;
   background-color: #f8f9fa;
@@ -218,7 +184,6 @@ ul {
   padding: 0;
   max-width: 1660px;
 }
-
 
 .one-arr {
   margin-bottom: 20px;
@@ -287,7 +252,16 @@ ul {
   background-color: hotpink;
 }
 
+.highlight {
+  color: #fff;
+  background-color:  rgba(161, 59, 133, 0.40);
+}
 
+.mark {
+  color: #fff;
+  background-color: rgba(161, 59, 133, 0.40);
+  display: inline;
+}
 
 .btn-wrapp {
   display: flex;
@@ -331,3 +305,4 @@ ul {
   border-radius: 12px
 }
 </style>
+
