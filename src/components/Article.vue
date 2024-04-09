@@ -6,7 +6,7 @@
         <p class="num-block"> {{ name }} / {{ ArrayId }}</p>
         <ul class="arr-list">
           <li class="arr-item" v-for="(item, key, idx) in contentArrays" :key="key"
-          :style="{ display: showContentKeys[key] ? 'flex' : 'none' }">
+          :style="{ display: showContentKeys[key]? 'flex' : 'none' }">
 
             <div v-if="key === 'content'">
               <ul v-if="item" class="arr-list">
@@ -39,14 +39,14 @@
                 <li class="arr-item arr-item-one">
                   <input class="inp stuff" type="text" :value="item"
                   @input="updateValue($event, {name})">
-                  
+
                   <div :data-tooltip="name" :title="key" class="key key-h">
                     <button class="btn-save" @click="saveChanges(ArrayId, {key}, name)">💾</button>
                   </div>
                 </li>
               </ul>
                 </div>
-                
+
           </li>
         </ul>
         <ButtonShow
@@ -94,39 +94,21 @@ export default {
     }
   },
   setup(props) {
-    const showContentKeys = computed(() => {
-      if (!props.searchQuery) {
-        return {};
-      }
-      const matchingKeys = Object.keys(props.contentArrays).filter(key => {
-        if (typeof props.contentArrays[key] === 'string') {
-          return props.contentArrays[key].toLowerCase().includes(props.searchQuery.toLowerCase());
-        } else if (typeof props.contentArrays[key] === 'object') {
-          return JSON.stringify(props.contentArrays[key]).toLowerCase().includes(props.searchQuery.toLowerCase());
-        }
-        return false;
-      });
-      const result = {};
-      matchingKeys.forEach(key => {
-        result[key] = true;
-      });
-      return result;
-    });
+    const showContentKeys = ref(false);
 
     const toggleShow = (index, id) => {
-      console.log(index);
+      const newShowContentKeys = {};
+      Object.keys(props.contentArrays).forEach((key) => {
+        newShowContentKeys[key] = true;
+      });
+      showContentKeys.value = newShowContentKeys;
 
-      showContentKeys.value =!showContentKeys.value;
       if (props.contentArrays[index]) {
-        props.contentArrays[index] = props.contentArrays[index].map((it, key) => {
-          if (key!== "content" && key!== "customContent") {
-            console.log(showContentKeys.value);
-            return {
-             ...it,
-              show: showContentKeys.value[key],
-            };
-          }
-          return it;
+        props.contentArrays[index] = props.contentArrays[index].map((it) => {
+          return {
+          ...it,
+            show: true,
+          };
         });
       }
     };
