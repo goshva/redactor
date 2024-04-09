@@ -11,23 +11,11 @@ const { user: authUser } = storeToRefs(authStore);
 const articlesStore = useArticlesStore();
 const { articles, articlesList } = storeToRefs(articlesStore);
 
+const searchQuery = ref(''); // Добавляем переменную searchQuery
 
-/*
-const fetchData = async () => {
-    isFetching.value = true;
-    const response = await fetch('https://tender.one/api/?id=' + currentPage.value);
-
-    const result = await response.json();
-    //articles.append(result);// = [...data.value, ...result];
-    articlesStore.appendNewArticles(result);
-    isFetching.value = false;
-    currentPage.value++;
-};
-*/
 const handleScroll = () => {
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
         articlesStore.appendNewArticle();
-
     }
 };
 
@@ -43,11 +31,12 @@ onBeforeUnmount(() => {
 });
 </script>
 
+
 <template>
     <div>
         <ul v-if="articles.length" class="mainList" id="observerElement">
             <li v-for="article in articles" :key="article.id">
-                <ArticleEditor :name="article.name" :ArrayId="article.id" :contentArrays="article" />
+                <ArticleEditor :name="article.name" :ArrayId="article.id" :contentArrays="article" :searchQuery="searchQuery" />
             </li>
         </ul>
         <div v-if="articles.loading" class="spinner-border spinner-border-sm"></div>
