@@ -61,16 +61,16 @@ const searchArticles = () => {
 <template>
   <div class="app-container bg-light">
       <nav v-show="authStore.user" class="navbar navbar-expand navbar-dark bg-dark">
-          <div class="navbar-nav">
+          <div class="navbar-nav d-flex align-items-center ml-auto">
               <router-link to="/" class="nav-item nav-link" style="font-size: 24px;">🏠</router-link>
-              <a @click="authStore.logout()" class="nav-item nav-link" style="font-size: 24px;">🚪</a>
               <router-link to="/news" class="btn btn-success mb-4 ml-2">Создать новость</router-link>
-              <div class="flex mb-4">
-                  <div class="search-container">
-                      <input v-model="searchQuery" type="search" class="form-control with-icon" placeholder="Поиск...">
-                      <span class="search-icon">🔍</span>
-                  </div>
+              <div class="search-container">
+                  <input v-model="searchQuery" type="search" class="form-control with-icon" placeholder="Поиск...">
+                  <span class="search-icon">🔍</span>
               </div>
+          </div>
+          <div class="ml-auto">
+              <a @click="authStore.logout()" class="nav-item nav-link" style="font-size: 24px;">🚪</a>
           </div>
       </nav>
       <div class="container pt-4 pb-4">
@@ -82,7 +82,6 @@ const searchArticles = () => {
       </div>
   </div>
 </template>
-
 
 <style>
 @import '@/assets/base.css';
