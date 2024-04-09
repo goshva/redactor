@@ -62,14 +62,16 @@ const searchArticles = () => {
   <div class="app-container bg-light">
       <nav v-show="authStore.user" class="navbar navbar-expand navbar-dark bg-dark">
           <div class="navbar-nav d-flex align-items-center ml-auto">
-              <router-link to="/" class="nav-item nav-link" style="font-size: 24px;">🏠</router-link>
-              <router-link to="/news" class="btn btn-success mb-4 ml-2">Создать новость</router-link>
-              <div class="search-container">
+              <router-link to="/" class="nav-item nav-link d-flex align-items-center" style="font-size: 24px;">
+                  <span class="d-inline-block">🏠</span>
+              </router-link>
+              <router-link to="/news" class="btn btn-success ml-2 d-flex align-items-center">Создать новость</router-link>
+              <div class="search-container d-flex align-items-center">
                   <input v-model="searchQuery" type="search" class="form-control with-icon" placeholder="Поиск...">
                   <span class="search-icon">🔍</span>
               </div>
           </div>
-          <div class="ml-auto">
+          <div class="ml-auto d-flex align-items-center">
               <a @click="authStore.logout()" class="nav-item nav-link" style="font-size: 24px;">🚪</a>
           </div>
       </nav>
