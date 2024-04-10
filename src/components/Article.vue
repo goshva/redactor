@@ -33,7 +33,7 @@
             <div v-else>
               <ul class="arr-list">
                 <li class="arr-item arr-item-one">
-                  <input class="inp stuff" type="text" :value="item" @input="updateValue($event, key, item)" :class="{ highlight: showHighlight(name) }">
+                  <textarea class="inp stuff" type="text" :value="item" @input="updateValue($event, key, item)" :class="{ highlight: showHighlight(name) }"></textarea> 
                   <div :data-tooltip="key" class="key key-h" v-if="name">
                     <button class="btn-save" @click="saveChanges(ArrayId, {key}, item)">💾</button>
                   </div>
@@ -210,7 +210,7 @@ ul {
 }
 
 .arr-item-one {
-  height: 50px;
+  /* height: 50px; */
 }
 
 .inp {
@@ -218,7 +218,7 @@ ul {
   display: block;
   padding: 10px 30px;
   min-width: 850px;
-  height: 100%;
+  height: 200px;
   border-radius: 20px 0 0 20px;
 }
 

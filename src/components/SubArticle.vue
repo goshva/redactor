@@ -1,17 +1,17 @@
 <template> 
   <ul v-if="!!name" class="arr-list"> 
     <li class="arr-item"> 
-      <input v-if="contentArrays.type == 'input'" :value="contentArrays.value" class="inp" type="text" 
-        @input="updateValue($event, contentArrays)"> 
+      <textarea v-if="contentArrays.type == 'input'" :value="contentArrays.value" class="inp" type="text" 
+        @input="updateValue($event, contentArrays)"> </textarea>
       <textarea v-else-if="contentArrays.type == 'textarea'" :value="contentArrays.value" class="int" type="text" 
         @input="updateValue($event, contentArrays)" cols="108" rows="2"></textarea> 
       <textarea v-else-if="contentArrays.type == 'editor'" :value="contentArrays.value" class="int" type="text" 
         @input="updateValue($event, contentArrays)" cols="108" rows="2"></textarea> 
-      <input v-else-if="contentArrays.type == 'link'" :value="contentArrays.value" class="inp" type="text" 
-        @input="updateValue($event, contentArrays)" cols="108" rows="2"> 
-      <input v-else-if="contentArrays.type == 'image'" :value="contentArrays.value" class="inp" type="text" 
-        @input="updateValue($event, contentArrays)" cols="108" rows="2"> 
-      <div :data-tooltip="name" :title="name" class="key key-top"> 
+      <textarea v-else-if="contentArrays.type == 'link'" :value="contentArrays.value" class="inp" type="text" 
+        @input="updateValue($event, contentArrays)" cols="108" rows="2"> </textarea>
+      <textarea v-else-if="contentArrays.type == 'image'" :value="contentArrays.value" class="inp" type="text" 
+        @input="updateValue($event, contentArrays)" cols="108" rows="2"> </textarea>
+      <div :data-tooltip="name" :title="name" class="key key-top">
         <button v-if="contentArrays.type == 'input'" class="btn-saves btn-reset btn-savee-input" @click="saveChanges(ArrayId, contentArrays.value, name, contentArrays.type)">💾</button> 
         <button v-else @click="saveChanges(ArrayId, contentArrays.value, name, contentArrays.type)" class=" btn-saves btn-reset btn-savee-textarea">💾</button> 
       </div> 
@@ -19,7 +19,7 @@
   </ul> 
   <ul class="arr-list" v-else> 
     <li class="arr-item"> 
-      <input class="inp" type="text" value=""> 
+      <textarea class="inp" type="text" value=""> </textarea>
       <div class="key-top"> 
         <button class="btn-reset btn-savee-input" @click="saveChanges(ArrayId, '', name, 'input')">💾</button> 
       </div> 
