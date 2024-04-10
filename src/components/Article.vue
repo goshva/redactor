@@ -1,12 +1,19 @@
-
 <template>
   <div class="container" v-if="showContainer">
     <ul class="list-container">
       <li class="one-arr">
-        <button class="link" @click="switchTo(generateUrl( contentArrays.url))">{{ generateUrl( contentArrays.url) }}</button>
-        <p class="num-block"> {{ name }} / {{ ArrayId }}</p>
-        
-        <ul class="arr-list">
+        <div class="content-wrap">
+          <div>
+            <button class="link" @click="switchTo(generateUrl( contentArrays.url))">{{ generateUrl( contentArrays.url) }}</button>
+            <p class="num-block"> {{ name }} / {{ Arrayid }}</p>
+          </div>
+          <div>
+            <button class="show-items" @click="toggleShowItems">
+              {{ showItems ? '🔽' : '🔼' }}
+            </button>
+          </div>
+        </div>
+        <ul class="arr-list" v-show="showItems">
           
           <li class="arr-item" v-for="(item, key, idx) in contentArrays" :key="key">
 
@@ -16,7 +23,7 @@
                   <textarea class="inp inp-content" type="text" :value="value"
                     @input="updateValue($event, {key})" :class="{ highlight: showHighlight(key) }"></textarea>
                     <div :data-tooltip="key" :title="key" class="key key-content">
-                        <button class="btn-save" @click="saveChanges(ArrayId, {key}, value)">💾</button>
+                        <button class="btn-save" @click="saveChanges(Arrayid, {key}, value)">💾</button>
                     </div>
                 </li>
               </ul>
@@ -25,7 +32,7 @@
             <div class="wrap-for-list" v-else-if="key === 'customContent' &&!!item">
               <ul class="arr-list">
                 <li v-for="(value, key) in JSON.parse(item)" :key="key" class="arr-item">
-                  <SubArticle :name="key" :ArrayId="ArrayId" :contentArrays="value" />
+                  <SubArticle :name="key" :Arrayid="Arrayid" :contentArrays="value" />
                 </li>
               </ul>
             </div>
@@ -35,7 +42,7 @@
                 <li class="arr-item arr-item-one">
                   <textarea class="inp stuff" type="text" :value="item" @input="updateValue($event, key, item)" :class="{ highlight: showHighlight(name) }"></textarea> 
                   <div :data-tooltip="key" class="key key-h" v-if="name">
-                    <button class="btn-save" @click="saveChanges(ArrayId, {key}, item)">💾</button>
+                    <button class="btn-save" @click="saveChanges(Arrayid, {key}, item)">💾</button>
                   </div>
                 </li>
               </ul>
@@ -65,7 +72,7 @@ export default {
       type: String,
       required: true
     },
-    ArrayId: {
+    Arrayid: {
       type: Number,
       required: true
     },
@@ -99,8 +106,8 @@ export default {
       name.value = event.target.value;
     };
 
-    const saveChanges = (arrayId, name, value) => {
-      console.log(`Изменения в id: ${arrayId}, Название: ${name.key}, Содержание: ${value}`);
+    const saveChanges = (arrayid, name, value) => {
+      console.log(`Изменения в id: ${arrayid}, Название: ${name.key}, Содержание: ${value}`);
     };
 
     const generateNumberBlock = (index) => {
@@ -129,6 +136,12 @@ export default {
       return value.toString().toLowerCase().includes(props.searchQuery.toLowerCase());
     };
 
+    const showItems = ref(false);
+
+    const toggleShowItems = () => {
+      showItems.value = !showItems.value;
+    };
+
     return {
       generateUrl,
       switchTo,
@@ -136,6 +149,8 @@ export default {
       saveChanges,
       updateValue,
       showHighlight,
+      showItems,
+      toggleShowItems,
       showContainer
     };
   }
@@ -143,6 +158,17 @@ export default {
 </script>
 
 <style scoped>
+
+.show-items {
+  background-color: transparent;
+  border: unset;
+  font-size: 40px;
+}
+
+.content-wrap {
+  display: flex;
+  justify-content: space-between;
+}
 
 .wrap-for-list {
   width: 100%;
