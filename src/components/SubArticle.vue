@@ -3,14 +3,14 @@
     <li class="arr-item"> 
       <textarea v-if="contentArrays.type == 'input'" :value="contentArrays.value" class="inp" type="text" 
         @input="updateValue($event, contentArrays)"> </textarea>
-      <textarea v-else-if="contentArrays.type == 'textarea'" :value="contentArrays.value" class="int" type="text" 
-        @input="updateValue($event, contentArrays)" cols="108" rows="2"></textarea> 
-      <textarea v-else-if="contentArrays.type == 'editor'" :value="contentArrays.value" class="int" type="text" 
-        @input="updateValue($event, contentArrays)" cols="108" rows="2"></textarea> 
+      <textarea v-else-if="contentArrays.type == 'textarea'" :value="contentArrays.value" class="inp" type="text" 
+        @input="updateValue($event, contentArrays)"></textarea> 
+      <textarea v-else-if="contentArrays.type == 'editor'" :value="contentArrays.value" class="inp" type="text" 
+        @input="updateValue($event, contentArrays)"></textarea> 
       <textarea v-else-if="contentArrays.type == 'link'" :value="contentArrays.value" class="inp" type="text" 
-        @input="updateValue($event, contentArrays)" cols="108" rows="2"> </textarea>
+        @input="updateValue($event, contentArrays)"> </textarea>
       <textarea v-else-if="contentArrays.type == 'image'" :value="contentArrays.value" class="inp" type="text" 
-        @input="updateValue($event, contentArrays)" cols="108" rows="2"> </textarea>
+        @input="updateValue($event, contentArrays)"> </textarea>
       <div :data-tooltip="name" :title="name" class="key key-top">
         <button v-if="contentArrays.type == 'input'" class="btn-saves btn-reset btn-savee-input" @click="saveChanges(ArrayId, contentArrays.value, name, contentArrays.type)">💾</button> 
         <button v-else @click="saveChanges(ArrayId, contentArrays.value, name, contentArrays.type)" class=" btn-saves btn-reset btn-savee-textarea">💾</button> 
@@ -60,14 +60,6 @@ export default defineComponent({
 
 
 <style>
-.int {
-  width: 850px;
-  border: unset;
-  height: 100px;
-  padding: 10px 30px;
-  border-radius: 20px 0 0 20px;
-  border: 1px solid rgba(161, 59, 133, 0.85);
-}
 
 .btn-reset {
   border: unset;
@@ -130,11 +122,13 @@ export default defineComponent({
 
 .inp {
   border: 1px solid rgba(161, 59, 133, 0.85);
+  font-weight: 500;
   display: block;
   padding: 10px 30px;
-  min-width: 850px;
+  width: 100%;
   height: 100%;
   border-radius: 20px 0 0 20px;
+  field-sizing: content;
 }
 
 .inp-null {
@@ -167,4 +161,6 @@ export default defineComponent({
   outline-offset: -4px;
   border-radius: 12px
 }
+
+
 </style>

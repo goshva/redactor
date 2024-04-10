@@ -10,7 +10,7 @@
           
           <li class="arr-item" v-for="(item, key, idx) in contentArrays" :key="key">
 
-            <div v-if="key === 'content'">
+            <div class="wrap-for-list" v-if="key === 'content'">
               <ul v-if="item" class="arr-list">
                 <li class="arr-item arr-item-one" v-for="(value, key) in JSON.parse(item)" :key="key">
                   <textarea class="inp inp-content" type="text" :value="value"
@@ -22,7 +22,7 @@
               </ul>
             </div>
 
-            <div v-else-if="key === 'customContent' &&!!item">
+            <div class="wrap-for-list" v-else-if="key === 'customContent' &&!!item">
               <ul class="arr-list">
                 <li v-for="(value, key) in JSON.parse(item)" :key="key" class="arr-item">
                   <SubArticle :name="key" :ArrayId="ArrayId" :contentArrays="value" />
@@ -30,7 +30,7 @@
               </ul>
             </div>
 
-            <div v-else>
+            <div class="wrap-for-list" v-else>
               <ul class="arr-list">
                 <li class="arr-item arr-item-one">
                   <textarea class="inp stuff" type="text" :value="item" @input="updateValue($event, key, item)" :class="{ highlight: showHighlight(name) }"></textarea> 
@@ -143,6 +143,11 @@ export default {
 </script>
 
 <style scoped>
+
+.wrap-for-list {
+  width: 100%;
+}
+
 [data-tooltip] {
   position: relative;
 }
@@ -209,17 +214,14 @@ ul {
   width: 100%;
 }
 
-.arr-item-one {
-  /* height: 50px; */
-}
-
 .inp {
   border: 1px solid rgba(66, 181, 255, 0.85);
   display: block;
   padding: 10px 30px;
-  min-width: 850px;
-  height: 200px;
+  min-height: 50px;
+  width: 100%;
   border-radius: 20px 0 0 20px;
+  field-sizing: content;
 }
 
 .inp-content {

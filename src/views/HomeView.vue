@@ -59,19 +59,19 @@ const searchArticles = () => {
 </script>
 
 <template>
-  <nav v-show="authStore.user" class="navbar navbar-expand navbar-dark bg-dark mb-4">
-          <div class="navbar-nav d-flex align-items-center ml-auto">
-              <router-link to="/" class="nav-item nav-link d-flex align-items-center" style="font-size: 24px;">
+  <nav v-show="authStore.user" class="navbar nav-wrap navbar-expand navbar-dark bg-dark mb-4">
+          <div class="navbar-nav links-wrap align-items-center ">
+              <router-link to="/" class="nav-item nav-link align-items-center link-home" >
                   <span class="d-inline-block">🏠</span>
               </router-link>
-              <router-link to="/news" class="btn btn-success ml-2 d-flex align-items-center">Создать новость</router-link>
-              <div class="search-container d-flex align-items-center">
-                  <input v-model="searchQuery" type="search" class="form-control with-icon" placeholder="Поиск...">
+              <router-link to="/news" class="btn btn-success btn-news align-items-center">Создать новость</router-link>
+              <div class="search-container align-items-center">
+                  <input v-model="searchQuery" type="search" class="form-control search-inp with-icon" placeholder="Поиск...">
                   <span class="search-icon">🔍</span>
               </div>
           </div>
-          <div class="ml-auto d-flex align-items-center">
-              <a @click="authStore.logout()" class="nav-item nav-link" style="font-size: 24px;">🚪</a>
+          <div class="log-wrap align-items-center">
+              <a @click="authStore.logout()" class="nav-item nav-link link-home">🚪</a>
           </div>
       </nav>
   <div>
@@ -90,9 +90,19 @@ const searchArticles = () => {
 <style>
 @import '@/assets/base.css';
 
+.nav-wrap {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+
+
+
 ul {
   list-style-type: none;
-
+margin: 0;
+padding: 0;
 }
 .mainList li {
     list-style-type: none;
