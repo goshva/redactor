@@ -218,6 +218,7 @@ ul {
   display: block;
   padding: 10px 30px;
   min-width: 850px;
+  max-width: 850px;
   height: 100%;
   border-radius: 20px 0 0 20px;
 }
