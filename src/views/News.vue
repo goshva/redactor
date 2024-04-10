@@ -1,7 +1,13 @@
 <template>
-  <router-link to="/" class="nav-item nav-link d-flex align-items-center" style="font-size: 24px;">
-  <span class="d-inline-block">🏠</span>
-  </router-link>
+<nav class="navbar navbar-expand navbar-dark bg-dark mb-4">
+  <div class="container pt-0 pb-4">
+    <router-link to="/" class="nav-item nav-link d-flex align-items-center" style="font-size: 24px;">
+      <span class="d-inline-block">🏠</span>
+    </router-link>
+  </div>
+</nav>
+<div class="container pt-0 pb-4">
+
   <ul class="arr-list"> 
     <li class="arr-item">
         <input type="text" class="inp" placeholder="id">
@@ -64,6 +70,7 @@
   <div class="key">
     <button class="btn-save">💾</button>
   </div>
+</div>
 </template>
 
 <script>
