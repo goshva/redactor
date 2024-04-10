@@ -116,7 +116,7 @@ export default defineComponent({
 
 
 .btn-save-null {
-  width: 144px;
+  width: 100px;
 }
 
 
@@ -150,7 +150,7 @@ export default defineComponent({
   justify-content: space-around;
   text-align: center;
   height: 100%;
-  width: 144px;
+  width: 100px;
   text-wrap: wrap;
   background-color: hotpink;
   border-radius: 0 20px 20px 0;

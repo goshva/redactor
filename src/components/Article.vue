@@ -219,7 +219,6 @@ ul {
   display: block;
   padding: 10px 30px;
   min-height: 50px;
-  max-width: 850px;
   width: 100%;
   border-radius: 20px 0 0 20px;
   field-sizing: content;
@@ -241,7 +240,7 @@ ul {
   justify-content: space-around;
   text-align: center;
   height: 100%;
-  width: 144px;
+  width: 100px;
   text-wrap: wrap;
   background-color: dodgerblue;
   border-radius: 0 20px 20px 0;
