@@ -1,5 +1,7 @@
 <template>
-
+  <router-link to="/" class="nav-item nav-link d-flex align-items-center" style="font-size: 24px;">
+  <span class="d-inline-block">🏠</span>
+  </router-link>
   <ul class="arr-list"> 
     <li class="arr-item">
         <input type="text" class="inp" placeholder="id">
