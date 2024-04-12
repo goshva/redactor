@@ -1,35 +1,42 @@
 <template>
-  <div class="container" v-if="showContainer">
+  <div v-if="showContainer" class="container">
     <ul class="list-container">
       <li class="one-arr">
         <div class="content-wrap">
           <div>
-            <button class="link" @click="switchTo(generateUrl( contentArrays.url))">{{ generateUrl( contentArrays.url) }}</button>
+            <button @click="switchTo(generateUrl( contentArrays.url))" class="link">
+              {{ generateUrl( contentArrays.url) }}
+            </button>
             <p class="num-block"> {{ name }} / {{ Arrayid }}</p>
           </div>
           <div>
-            <button class="show-items" @click="toggleShowItems">
+            <button @click="toggleShowItems" class="show-items">
               {{ showItems ? '🔽' : '🔼' }}
             </button>
           </div>
         </div>
         <ul class="arr-list" v-show="showItems">
-          
-          <li class="arr-item" v-for="(item, key, idx) in contentArrays" :key="key">
+          <li v-for="(item, key, idx) in contentArrays" :key="key" class="arr-item">
 
-            <div class="wrap-for-list" v-if="key === 'content'">
+            <div v-if="key === 'content'" class="wrap-for-list">
               <ul v-if="item" class="arr-list">
-                <li class="arr-item arr-item-one" v-for="(value, key) in JSON.parse(item)" :key="key">
-                  <textarea class="inp inp-content" type="text" :value="value"
-                    @input="updateValue($event, {key})" :class="{ highlight: showHighlight(key) }"></textarea>
+                <li v-for="(value, key) in JSON.parse(item)" :key="key" class="arr-item arr-item-one">
+                  <textarea
+                    @input="updateValue($event, {value})" 
+                    :value="value"
+                    :class="{ highlight: showHighlight(key) }"
+                    class="inp inp-content" 
+                    type="text" 
+                  >
+                  </textarea>
                     <div :data-tooltip="key" :title="key" class="key key-content">
-                        <button class="btn-save" @click="saveChanges(Arrayid, {key}, value)">💾</button>
+                        <button @click="saveChanges(Arrayid, {key}, value)" class="btn-save">💾</button>
                     </div>
                 </li>
               </ul>
             </div>
 
-            <div class="wrap-for-list" v-else-if="key === 'customContent' &&!!item">
+            <div v-else-if="key === 'customContent' &&!!item" class="wrap-for-list">
               <ul class="arr-list">
                 <li v-for="(value, key) in JSON.parse(item)" :key="key" class="arr-item">
                   <SubArticle :name="key" :Arrayid="Arrayid" :contentArrays="value" />
@@ -37,16 +44,23 @@
               </ul>
             </div>
 
-            <div class="wrap-for-list" v-else>
+            <div v-else class="wrap-for-list">
               <ul class="arr-list">
                 <li class="arr-item arr-item-one">
-                  <textarea class="inp stuff" type="text" :value="item" @input="updateValue($event, key, item)" :class="{ highlight: showHighlight(name) }"></textarea> 
-                  <div :data-tooltip="key" class="key key-h" v-if="name">
-                    <button class="btn-save" @click="saveChanges(Arrayid, {key}, item)">💾</button>
+                  <textarea 
+                    @input="updateValue($event, key, item)" 
+                    :value="item" 
+                    :class="{ highlight: showHighlight(item) }"
+                    class="inp stuff" 
+                    type="text" 
+                  >
+                  </textarea> 
+                  <div v-if="name" :data-tooltip="key" class="key key-h">
+                    <button @click="saveChanges(Arrayid, {key}, item)" class="btn-save">💾</button>
                   </div>
                 </li>
               </ul>
-                </div>
+            </div>
                 
           </li>
         </ul>
@@ -130,7 +144,7 @@ export default {
     }
 
     const showHighlight = (value) => {
-      if (!props.searchQuery) {
+      if (!props.searchQuery || !value) {
         return false;
       }
       return value.toString().toLowerCase().includes(props.searchQuery.toLowerCase());
