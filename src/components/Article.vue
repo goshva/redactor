@@ -4,10 +4,10 @@
       <li class="one-arr">
         <div class="content-wrap">
           <div>
-            <button @click="switchTo(generateUrl( contentArrays.url))" class="link">
-              {{ generateUrl( contentArrays.url) }}
+            <button @click="switchTo(generateUrl(contentArrays.url))" class="link">
+              {{ generateUrl(contentArrays.url) }}
             </button>
-            <p class="num-block"> {{ name }} / {{ Arrayid }}</p>
+            <p class="num-block"> {{ name }} / {{ ArrayId }}</p>
           </div>
           <div>
             <button @click="toggleShowItems" class="show-items">
@@ -30,16 +30,16 @@
                   >
                   </textarea>
                     <div :data-tooltip="key" :title="key" class="key key-content">
-                        <button @click="saveChanges(Arrayid, {key}, value)" class="btn-save">💾</button>
+                        <button @click="saveChanges(ArrayId, {key}, value)" class="btn-save">💾</button>
                     </div>
                 </li>
               </ul>
             </div>
 
-            <div v-else-if="key === 'customContent' &&!!item" class="wrap-for-list">
+            <div v-else-if="key === 'customContent' && !!item" class="wrap-for-list">
               <ul class="arr-list">
                 <li v-for="(value, key) in JSON.parse(item)" :key="key" class="arr-item">
-                  <SubArticle :name="key" :Arrayid="Arrayid" :contentArrays="value" />
+                  <SubArticle :name="key" :ArrayId="ArrayId" :contentArrays="value" />
                 </li>
               </ul>
             </div>
@@ -56,7 +56,7 @@
                   >
                   </textarea> 
                   <div v-if="name" :data-tooltip="key" class="key key-h">
-                    <button @click="saveChanges(Arrayid, {key}, item)" class="btn-save">💾</button>
+                    <button @click="saveChanges(ArrayId, {key}, item)" class="btn-save">💾</button>
                   </div>
                 </li>
               </ul>
@@ -86,11 +86,10 @@ export default {
       type: String,
       required: true
     },
-    Arrayid: {
+    ArrayId: {
       type: Number,
       required: true
     },
-    //contentArrays
     contentArrays: {
       type: Object,
       required: true
@@ -120,19 +119,14 @@ export default {
       name.value = event.target.value;
     };
 
-    const saveChanges = (arrayid, name, value) => {
-      console.log(`Изменения в id: ${arrayid}, Название: ${name.key}, Содержание: ${value}`);
+    const saveChanges = (ArrayId, name, value) => {
+      console.log(`Changes in id: ${ArrayId}, Name: ${name.key}, Content: ${value}`);
     };
-
-    const generateNumberBlock = (index) => {
-      const numberBlock = props.contentArrays[index]['id']
-      return numberBlock
-    }
 
     const generateUrl = (index) => {
       const mainUrl = "http://tender.one/"
-      const url = index? index : null
-      if ( url === null) {
+      const url = index ? index : null
+      if (url === null) {
         return mainUrl
       } else {
         return mainUrl + url
@@ -159,7 +153,6 @@ export default {
     return {
       generateUrl,
       switchTo,
-      generateNumberBlock,
       saveChanges,
       updateValue,
       showHighlight,
@@ -170,7 +163,6 @@ export default {
   }
 };
 </script>
-
 <style scoped>
 
 .show-items {

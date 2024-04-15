@@ -162,5 +162,9 @@ export default defineComponent({
   border-radius: 12px
 }
 
+.inp-content {
+  border: 1px solid rgba(161, 59, 133, 0.85);
+
+}
 
 </style>
