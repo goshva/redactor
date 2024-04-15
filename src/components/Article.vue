@@ -120,7 +120,7 @@ export default {
     };
 
     const saveChanges = (ArrayId, name, value) => {
-      console.log(`Changes in id: ${ArrayId}, Name: ${name.key}, Content: ${value}`);
+      console.log(`Изменения в id: ${ArrayId}, Название: ${name.key}, Содержание: ${value}`);
     };
 
     const generateUrl = (index) => {
