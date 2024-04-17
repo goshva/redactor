@@ -198,7 +198,7 @@ export default {
   background: rgba(66, 181, 255, 0.85);
   color: black;
   padding: 5px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
   pointer-events: none;
   opacity: 0;
   transition: 0.5s;
