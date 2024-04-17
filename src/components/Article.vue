@@ -233,7 +233,7 @@ ul {
   border-radius: 20px;
   padding: 15px 20px;
   background: linear-gradient(135deg, rgba(66, 181, 255, 0.1) 0%, rgba(161, 59, 134, 0.1) 100%);
-  color: #fff;
+  color: #000000;
 }
 
 .arr-list {
