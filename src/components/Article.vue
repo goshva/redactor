@@ -232,7 +232,7 @@ ul {
   border: 3px solid gray;
   border-radius: 20px;
   padding: 15px 20px;
-  background: linear-gradient(135deg, rgba(66, 181, 255, 0.87) 0%, rgba(161, 59, 133, 0.87) 100%);
+  background: linear-gradient(135deg, rgba(66, 181, 255, 0.65) 0%, rgba(161, 59, 134, 0.65) 100%);
   color: #fff;
 }
 
