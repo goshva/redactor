@@ -232,7 +232,7 @@ ul {
   border: 1px solid gray;
   border-radius: 20px;
   padding: 15px 20px;
-  background: linear-gradient(135deg, rgba(66, 181, 255, 0.65) 0%, rgba(161, 59, 134, 0.65) 100%);
+  background: linear-gradient(135deg, rgba(66, 181, 255, 0.1) 0%, rgba(161, 59, 134, 0.1) 100%);
   color: #fff;
 }
 
@@ -320,7 +320,7 @@ ul {
   font-size: 30px;
   font-weight: bold;
   border: 2px dashed #fff;
-  color: #fff;
+  color: #000000;
   background-color: transparent;
   margin-right: 40px;
 }
@@ -328,7 +328,7 @@ ul {
 .num-block {
   display: inline-block;
   font-size: 32px;
-  color: #fff;
+  color: #000000;
   font-weight: bold;
   background-color: transparent;
 }
