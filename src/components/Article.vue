@@ -198,7 +198,7 @@ export default {
   background: rgba(66, 181, 255, 0.85);
   color: black;
   padding: 5px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
   pointer-events: none;
   opacity: 0;
   transition: 0.5s;
@@ -229,7 +229,7 @@ ul {
 
 .one-arr {
   margin-bottom: 20px;
-  border: 3px solid gray;
+  border: 1px solid gray;
   border-radius: 20px;
   padding: 15px 20px;
   background: linear-gradient(135deg, rgba(66, 181, 255, 0.65) 0%, rgba(161, 59, 134, 0.65) 100%);
