@@ -11,7 +11,7 @@
           </div>
           <div>
             <button @click="toggleShowItems" class="show-items">
-              {{ showItems ? '🔽' : '🔼' }}
+              {{ showItems ? '🔼' : '🔽' }}
             </button>
           </div>
         </div>
@@ -21,7 +21,7 @@
             <div v-if="key === 'content'" class="wrap-for-list">
               <ul v-if="item" class="arr-list">
                 <li v-for="(value, key) in JSON.parse(item)" :key="key" class="arr-item arr-item-one">
-                  <img v-if="key === 'image'" :src="'https://tender.one/uploads/' + value" class="image-preview" />
+                  <img v-if="key === 'image'" :src="generateImageUrl(value)" class="image-preview" />
                   <textarea
                     v-else
                     @input="updateValue($event, {value})" 
@@ -151,7 +151,7 @@ export default {
     };
 
     const generateImageUrl = (path) => {
-      return `http://tender.one/${path}`;
+      return `https://tender.one/uploads/${path}`;
     };
 
     return {
@@ -232,7 +232,7 @@ ul {
   border: 3px solid gray;
   border-radius: 20px;
   padding: 15px 20px;
-  background: linear-gradient(135deg, rgba(66, 181, 255, 0.85) 0%, rgba(161, 59, 133, 0.85) 100%);
+  background: linear-gradient(135deg, rgba(66, 181, 255, 0.87) 0%, rgba(161, 59, 133, 0.87) 100%);
   color: #fff;
 }
 
