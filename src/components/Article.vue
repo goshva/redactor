@@ -21,17 +21,18 @@
             <div v-if="key === 'content'" class="wrap-for-list">
               <ul v-if="item" class="arr-list">
                 <li v-for="(value, key) in JSON.parse(item)" :key="key" class="arr-item arr-item-one">
+                  <img v-if="key === 'image'" :src="'https://tender.one/uploads/' + value" class="image-preview" />
                   <textarea
+                    v-else
                     @input="updateValue($event, {value})" 
                     :value="value"
                     :class="{ highlight: showHighlight(key) }"
                     class="inp inp-content" 
                     type="text" 
-                  >
-                  </textarea>
-                    <div :data-tooltip="key" :title="key" class="key key-content">
-                        <button @click="saveChanges(ArrayId, {key}, value)" class="btn-save">💾</button>
-                    </div>
+                  ></textarea>
+                  <div :data-tooltip="key" :title="key" class="key key-content">
+                    <button @click="saveChanges(ArrayId, {key}, value)" class="btn-save">💾</button>
+                  </div>
                 </li>
               </ul>
             </div>
@@ -53,8 +54,7 @@
                     :class="{ highlight: showHighlight(item) }"
                     class="inp stuff" 
                     type="text" 
-                  >
-                  </textarea> 
+                  ></textarea> 
                   <div v-if="name" :data-tooltip="key" class="key key-h">
                     <button @click="saveChanges(ArrayId, {key}, item)" class="btn-save">💾</button>
                   </div>
@@ -150,6 +150,10 @@ export default {
       showItems.value = !showItems.value;
     };
 
+    const generateImageUrl = (path) => {
+      return `http://tender.one/${path}`;
+    };
+
     return {
       generateUrl,
       switchTo,
@@ -158,7 +162,8 @@ export default {
       showHighlight,
       showItems,
       toggleShowItems,
-      showContainer
+      showContainer,
+      generateImageUrl 
     };
   }
 };
